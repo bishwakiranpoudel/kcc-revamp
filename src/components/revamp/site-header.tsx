@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { APP_URL, NAV_LINKS } from "@/lib/site";
 import { getScrollY, subscribeScroll } from "@/lib/scroll";
@@ -53,13 +54,22 @@ export function SiteHeader() {
             : "glass-pill"
         }`}
       >
-        <Link
-          href="/"
-          className={`font-display text-lg font-extrabold tracking-tight ${
-            onDemo ? "text-ink" : "text-trail-ink"
-          }`}
-        >
-          Kennel<span className="text-trail-orange">Eyes</span>
+        <Link href="/" aria-label="KennelEyes home" className="flex items-center gap-2">
+          <Image
+            src="/logo/logo_eye.png"
+            alt=""
+            width={48}
+            height={27}
+            priority
+            className="h-7 w-auto"
+          />
+          <span
+            className={`font-display text-lg font-extrabold tracking-tight ${
+              onDemo ? "text-ink" : "text-trail-ink"
+            }`}
+          >
+            Kennel<span className="text-trail-cyan">Eyes</span>
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

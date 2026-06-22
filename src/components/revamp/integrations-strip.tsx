@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BrandLogo, PageContainer } from "@/components/revamp/section-ui";
@@ -314,6 +315,13 @@ export function IntegrationsStrip() {
               style={{ background: PANEL_BG, boxShadow: PANEL_SHADOW }}
               className="rounded-2xl border border-trail-cyan/40 px-6 py-5 text-center"
             >
+              <Image
+                src="/logo/logo_eye.png"
+                alt=""
+                width={48}
+                height={27}
+                className="mx-auto mb-1.5 h-6 w-auto"
+              />
               <span className="font-display text-lg font-bold text-trail-cyan">
                 KennelEyes
               </span>
@@ -417,6 +425,13 @@ export function IntegrationsStrip() {
               style={{ background: PANEL_BG, boxShadow: PANEL_SHADOW }}
               className="relative rounded-2xl border border-trail-cyan/40 px-8 py-6 text-center"
             >
+              <Image
+                src="/logo/logo_eye.png"
+                alt=""
+                width={52}
+                height={29}
+                className="mx-auto mb-2 h-7 w-auto"
+              />
               <span className="font-display text-xl font-bold text-trail-cyan">
                 KennelEyes
               </span>

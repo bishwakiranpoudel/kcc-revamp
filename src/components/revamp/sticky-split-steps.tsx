@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { INTEGRATIONS } from "@/lib/site";
@@ -287,11 +288,13 @@ export function StickySplitSteps() {
                     <div className="how-orbit-ring absolute inset-0 animate-[spin_44s_linear_infinite] rounded-full border border-dashed border-trail-cyan/35" />
                     <div className="how-orbit-ring absolute inset-[14%] animate-[spin_30s_linear_infinite_reverse] rounded-full border border-trail-border/60" />
                     <div className="absolute left-1/2 top-1/2 flex size-[34%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-trail-cyan/45 bg-trail-surface-strong text-center shadow-[0_8px_30px_-8px_rgba(14,116,144,0.55)]">
-                      <span className="font-display text-[0.6875rem] font-extrabold leading-tight text-trail-cyan sm:text-xs">
-                        Kennel
-                        <br />
-                        Eyes
-                      </span>
+                      <Image
+                        src="/logo/logo_eye.png"
+                        alt="KennelEyes"
+                        width={52}
+                        height={29}
+                        className="h-6 w-auto px-1 sm:h-7"
+                      />
                     </div>
                     {INTEGRATIONS.map((name, j) => {
                       const a = (j / 3) * Math.PI * 2 - Math.PI / 2;
