@@ -1,26 +1,620 @@
 @import "tailwindcss";
 
+/*
+  KennelEyes Revamp — unified design system
+
+  Layer 1 · Trail (marketing shell)     → trail-* tokens, dark adventure UI
+  Layer 2 · Demo zone (product handoff) → demo-zone, bridges trail → paper
+  Layer 3 · KCC app surface             → .kcc-light, exact chart/demo tokens
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Trail marketing shell ── */
+  --trail-bg: #050505;
+  --trail-bg-deep: #030712;
+  --trail-bg-race: #0a1628;
+  --trail-bg-orbit: #070707;
+  --trail-surface: rgba(245, 240, 230, 0.04);
+  --trail-surface-strong: rgba(245, 240, 230, 0.08);
+  --trail-ink: #f5f0e6;
+  --trail-ink-muted: #a89f8f;
+  --trail-ink-faint: rgba(245, 240, 230, 0.45);
+  --trail-border: rgba(245, 240, 230, 0.12);
+  --trail-border-strong: rgba(245, 240, 230, 0.22);
+  --trail-orange: #f97316;
+  --trail-green: #4ade80;
+  --trail-cream: #f5e6c8;
+  --trail-cyan: #22d3ee;
+  --trail-purple: #c084fc;
+  --trail-glass: rgba(245, 240, 230, 0.06);
+  --trail-glass-border: rgba(245, 240, 230, 0.12);
+  --trail-light-card: #eef3fb;
+  --trail-portal-from: #eef3fb;
+  --trail-portal-mid: #f4f6f9;
+  --trail-portal-to: #ffffff;
+  --trail-glow-orange: rgba(249, 115, 22, 0.15);
+  --trail-glow-cyan: rgba(34, 211, 238, 0.12);
+  --trail-glow-purple: rgba(192, 132, 252, 0.14);
+  --trail-gradient-headline: linear-gradient(
+    90deg,
+    var(--trail-orange),
+    var(--trail-cream),
+    var(--trail-cyan)
+  );
+  --trail-progress: linear-gradient(
+    90deg,
+    var(--trail-orange),
+    var(--trail-cyan),
+    var(--trail-green)
+  );
+
+  /* ── KCC light product surface (demos / app) ── */
+  --background: #f4f6f9;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --paper: #f4f6f9;
+  --paper-2: #eaeef4;
+  --line: #e2e8f0;
+  --border: #e2e8f0;
+  --ink: #0f172a;
+  --ink-muted: #475569;
+
+  /* ── Analytics palette ── */
+  --cc-secondary: #059669;
+  --cc-tertiary: #d97706;
+  --cc-boarding: #9333ea;
+  --cc-daycare: #2563eb;
+  --cc-services: #059669;
+  --data-revenue: #059669;
+  --data-boarding: #9333ea;
+  --data-daycare: #2563eb;
+  --data-grooming: #d97706;
+  --data-labor: #d97706;
+  --data-scheduled: #0e7490;
+  --data-danger: #e11d48;
+
+  /* ── Legacy / demo chrome ── */
+  --navy-950: #04101f;
+  --navy-900: #061a30;
+  --navy-800: #0c2748;
+  --navy-700: #123a66;
+  --navy-600: #1e4976;
+  --signal: #38bdf8;
+  --signal-strong: #00a3ff;
+  --signal-deep: #0369a1;
+
+  --radius: 0.75rem;
+  --radius-pill: 9999px;
+
+  --header-h: 4.5rem;
+  --section-py: clamp(4rem, 7vw, 6.5rem);
+  --page-px: clamp(1.25rem, 4vw, 2.5rem);
+  --page-max: 72rem;
+  --demo-max: 90rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Let hero-class layouts breathe on large desktop screens. */
+@media (min-width: 1536px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --page-max: 78rem;
   }
 }
 
+@media (min-width: 1920px) {
+  :root {
+    --page-max: 84rem;
+    --page-px: 3rem;
+  }
+}
+
+@theme inline {
+  /* Trail */
+  --color-trail-bg: var(--trail-bg);
+  --color-trail-bg-deep: var(--trail-bg-deep);
+  --color-trail-bg-race: var(--trail-bg-race);
+  --color-trail-bg-orbit: var(--trail-bg-orbit);
+  --color-trail-surface: var(--trail-surface);
+  --color-trail-surface-strong: var(--trail-surface-strong);
+  --color-trail-ink: var(--trail-ink);
+  --color-trail-muted: var(--trail-ink-muted);
+  --color-trail-faint: var(--trail-ink-faint);
+  --color-trail-border: var(--trail-border);
+  --color-trail-orange: var(--trail-orange);
+  --color-trail-green: var(--trail-green);
+  --color-trail-cream: var(--trail-cream);
+  --color-trail-cyan: var(--trail-cyan);
+  --color-trail-purple: var(--trail-purple);
+  --color-trail-light-card: var(--trail-light-card);
+
+  /* Product surface */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-line: var(--line);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+
+  /* Analytics */
+  --color-cc-secondary: var(--cc-secondary);
+  --color-cc-tertiary: var(--cc-tertiary);
+  --color-cc-boarding: var(--cc-boarding);
+  --color-cc-daycare: var(--cc-daycare);
+  --color-cc-services: var(--cc-services);
+  --color-data-revenue: var(--data-revenue);
+  --color-data-boarding: var(--data-boarding);
+  --color-data-daycare: var(--data-daycare);
+  --color-data-grooming: var(--data-grooming);
+  --color-data-labor: var(--data-labor);
+  --color-data-scheduled: var(--data-scheduled);
+  --color-data-danger: var(--data-danger);
+
+  /* Navy / signal */
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-navy-600: var(--navy-600);
+  --color-signal: var(--signal);
+  --color-signal-strong: var(--signal-strong);
+  --color-signal-deep: var(--signal-deep);
+
+  /* Typography */
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-syne), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-theme: var(--radius);
+}
+
+html {
+  scroll-padding-top: calc(var(--header-h) + 0.75rem);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.pet-cutout,
+.will-change-transform {
+  backface-visibility: hidden;
+}
+
 body {
+  background: var(--trail-bg);
+  color: var(--trail-ink);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* Premium thin scrollbar for the dark marketing shell. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--trail-ink) 22%, transparent)
+    transparent;
+}
+body::-webkit-scrollbar {
+  width: 11px;
+}
+body::-webkit-scrollbar-track {
+  background: var(--trail-bg);
+}
+body::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--trail-ink) 16%, transparent);
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--trail-bg);
+  background-clip: padding-box;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--trail-ink) 30%, transparent);
+  background-clip: padding-box;
+}
+
+/* Consistent keyboard focus ring across interactive elements. */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--trail-cyan);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+.demo-zone a:focus-visible,
+.demo-zone button:focus-visible,
+.demo-zone select:focus-visible {
+  outline-color: var(--signal-strong);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--trail-orange) 40%, transparent);
+  color: var(--trail-ink);
+}
+
+/* ── Typography utilities ── */
+.font-display {
+  font-family: var(--font-syne), system-ui, sans-serif;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.text-gradient-trail {
+  background: var(--trail-gradient-headline);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Layout rhythm ── */
+.page-container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-px);
+}
+
+.demo-container {
+  width: 100%;
+  max-width: var(--demo-max);
+  margin-inline: auto;
+  padding-inline: var(--page-px);
+}
+
+.display-xl {
+  font-family: var(--font-syne), system-ui, sans-serif;
+  /* Scale by the smaller of width/height so the hero always fits one screen. */
+  font-size: clamp(2.5rem, min(6vw, 8.5vh), 4.5rem);
+  line-height: 0.94;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.display-lg {
+  font-family: var(--font-syne), system-ui, sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.btn-trail-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--trail-cyan);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #000;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.btn-trail-primary:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 14px 32px -12px rgba(34, 211, 238, 0.6);
+}
+
+.btn-trail-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--trail-border);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: var(--trail-ink);
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+.btn-trail-secondary:hover {
+  border-color: var(--trail-orange);
+  color: var(--trail-orange);
+  background-color: color-mix(in oklab, var(--trail-orange) 8%, transparent);
+}
+
+.btn-product-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--signal-strong);
+  padding: 0.875rem 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  transition: transform 0.2s ease;
+}
+.btn-product-primary:hover {
+  transform: scale(1.04);
+}
+
+.scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--trail-ink-faint);
+}
+.scroll-cue-track {
+  height: 2.5rem;
+  width: 1.375rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--trail-border);
+  padding: 0.25rem;
+}
+.scroll-cue-dot {
+  margin-inline: auto;
+  height: 0.375rem;
+  width: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--trail-cyan);
+  animation: scroll-cue-bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-cue-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(0.625rem);
+    opacity: 1;
+  }
+}
+
+.stat-chip {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--trail-muted);
+}
+.stat-chip strong {
+  color: var(--trail-ink);
+  font-weight: 700;
+}
+
+/* ── Trail surfaces ── */
+.trail-section {
+  background: var(--trail-bg);
+  color: var(--trail-ink);
+}
+
+.trail-card {
+  background: var(--trail-surface);
+  border: 1px solid var(--trail-border);
+  backdrop-filter: blur(8px);
+}
+
+.trail-card-strong {
+  background: var(--trail-surface-strong);
+  border: 1px solid var(--trail-border);
+}
+
+.glass-pill {
+  background: var(--trail-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--trail-glass-border);
+}
+
+.halftone {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--trail-ink) 8%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 4px 4px;
+}
+
+.topo-wash {
+  background-image: url(/graphics/topo-tile.png);
+  background-size: 420px 420px;
+  background-repeat: repeat;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 20%, transparent 78%);
+}
+
+.orbit-wash {
+  background-image: url(/graphics/orbit-dust.png);
+  background-size: cover;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 15%, transparent 72%);
+}
+
+.data-range-wash {
+  background-image: url(/graphics/data-range.png);
+  background-size: min(120%, 72rem) auto;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(to top, black 10%, transparent 88%);
+}
+
+.section-wash-orange {
+  background: radial-gradient(
+    ellipse 80% 60% at 20% 0%,
+    color-mix(in oklab, var(--trail-orange) 12%, transparent),
+    transparent 70%
+  );
+}
+
+.section-wash-purple {
+  background: radial-gradient(
+    ellipse 70% 55% at 80% 20%,
+    var(--trail-glow-purple),
+    transparent 70%
+  );
+}
+
+.section-wash-cyan {
+  background: radial-gradient(
+    ellipse 65% 50% at 50% 50%,
+    var(--trail-glow-cyan),
+    transparent 70%
+  );
+}
+
+.pet-cutout {
+  mix-blend-mode: lighten;
+  filter: drop-shadow(0 12px 28px var(--trail-glow-orange));
+}
+
+.trail-pet-image {
+  mix-blend-mode: lighten;
+  filter: contrast(1.35) brightness(1.08) saturate(1.1)
+    drop-shadow(0 16px 36px rgba(249, 115, 22, 0.22));
+  mask-image: linear-gradient(to top, transparent 0%, black 18%, black 92%, transparent 100%);
+}
+
+.trail-scene {
+  mix-blend-mode: lighten;
+  filter: contrast(1.05) saturate(1.05);
+  mask-image: radial-gradient(
+    ellipse 85% 75% at 50% 60%,
+    black 30%,
+    transparent 82%
+  );
+}
+
+.pet-silhouette {
+  width: min(28vw, 11rem);
+  height: auto;
+  opacity: 0.55;
+  filter: drop-shadow(0 8px 24px rgba(34, 211, 238, 0.2));
+}
+
+.chaos-burst {
+  width: min(72vw, 22rem);
+  height: auto;
+  opacity: 0;
+}
+
+.trail-mountain-ridge {
+  opacity: 0.38;
+  filter: brightness(0.75) contrast(1.1) saturate(0.7) blur(1px);
+  transform: translateY(6%) scale(1.04);
+}
+
+.trail-mountain-main {
+  filter: brightness(0.92) contrast(1.12) saturate(0.88);
+}
+
+/* ── Demo zone: trail → product handoff ── */
+.demo-zone {
+  background: linear-gradient(
+    180deg,
+    var(--trail-portal-to) 0%,
+    var(--paper) 8%,
+    var(--paper) 100%
+  );
+  color: var(--ink);
+}
+
+.demo-zone .eyebrow {
+  color: var(--data-scheduled);
+}
+
+.demo-zone h2,
+.demo-zone h3 {
+  color: var(--ink);
+}
+
+.demo-zone .demo-zone-muted {
+  color: var(--ink-muted);
+}
+
+.demo-zone .demo-zone-accent {
+  color: var(--signal-strong);
+}
+
+.light-card {
+  background: var(--trail-light-card);
+  border: 1px solid color-mix(in oklab, var(--ink) 6%, transparent);
+  box-shadow: 0 22px 48px -26px color-mix(in oklab, var(--navy-900) 65%, transparent);
+}
+
+/* ── KCC app surface (embedded demos) ── */
+.kcc-light {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+.demo-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--ink) 22%, transparent) transparent;
+  scroll-behavior: smooth;
+}
+.demo-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.demo-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.demo-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--ink) 16%, transparent);
+  border-radius: var(--radius-pill);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+.demo-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--ink) 30%, transparent);
+  background-clip: padding-box;
+}
+
+/* Nav scrim above pinned demos */
+.demo-nav-scrim {
+  background: linear-gradient(
+    to bottom,
+    var(--paper),
+    var(--paper) 60px,
+    transparent 84px
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.demo-active .demo-nav-scrim {
+  opacity: 1;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  line-height: 1;
+}
+.ms-fill {
+  font-variation-settings: "FILL" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .scroll-cue-dot {
+    animation: none;
+  }
 }
