@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Fraunces,
+  DM_Sans,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { ScrollTriggerRefresh } from "@/components/providers/scroll-trigger-refresh";
@@ -7,9 +12,20 @@ import { ScrollProgress } from "@/components/revamp/scroll-progress";
 import { SiteHeader } from "@/components/revamp/site-header";
 import { SiteFooter } from "@/components/revamp/site-footer";
 
-const syne = Syne({
+// Display — expressive grotesque for headlines.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-bricolage",
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+});
+
+// Editorial accent — soft serif italic for emphasis phrases.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -51,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable}`}
+      className={`${bricolage.variable} ${fraunces.variable} ${dmSans.variable} ${jetbrains.variable}`}
     >
       <head>
         <link

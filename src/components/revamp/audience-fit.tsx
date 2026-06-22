@@ -126,7 +126,7 @@ export function AudienceFit() {
 
           <div
             ref={notFitRef}
-            className="rounded-3xl border border-trail-border bg-trail-bg-deep/60 p-7 will-change-transform sm:p-8 md:col-span-2"
+            className="trail-card rounded-3xl border border-trail-border p-7 will-change-transform sm:p-8 md:col-span-2"
           >
             <p className="eyebrow text-trail-muted">Probably not yet</p>
             <p className="mt-1 text-xs text-trail-faint">No hard feelings</p>

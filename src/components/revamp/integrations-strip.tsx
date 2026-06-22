@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BrandLogo, PageContainer } from "@/components/revamp/section-ui";
-import { ArtIsolate, TopoBackdrop } from "@/components/revamp/trail-art";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,8 +32,9 @@ const integrations = [
   },
 ];
 
-/** Solid, slightly lifted panel so connector lines never bleed through. */
-const PANEL_BG = "color-mix(in oklab, var(--trail-bg-deep) 84%, var(--trail-ink) 13%)";
+/** Solid white panel so connector lines never bleed through on light sand. */
+const PANEL_BG = "var(--trail-surface-strong)";
+const PANEL_SHADOW = "var(--trail-card-shadow)";
 
 function IntegrationCard({
   item,
@@ -45,7 +45,7 @@ function IntegrationCard({
 }) {
   return (
     <div
-      style={{ background: PANEL_BG }}
+      style={{ background: PANEL_BG, boxShadow: PANEL_SHADOW }}
       className={`flex items-center gap-3 rounded-2xl border border-trail-border px-3.5 py-3 ${className}`}
     >
       <BrandLogo name={item.name} size={36} />
@@ -76,6 +76,8 @@ export function IntegrationsStrip() {
   const pulseRef = useRef<HTMLDivElement>(null);
   const mobileCardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mobileHubRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const packetsRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -107,6 +109,7 @@ export function IntegrationsStrip() {
           gsap.set(hubRef.current, { scale: 0.88, opacity: 0.5 });
           gsap.set(glowRef.current, { opacity: 0, scale: 0.8 });
           gsap.set(pulseRef.current, { scale: 0.6, opacity: 0 });
+          gsap.set(packetsRef.current, { opacity: 0 });
 
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -118,6 +121,14 @@ export function IntegrationsStrip() {
               invalidateOnRefresh: true,
             },
           });
+
+          // Backdrop drifts for depth while the stack assembles.
+          tl.fromTo(
+            bgRef.current,
+            { yPercent: 4 },
+            { yPercent: -4, ease: "none", duration: 1 },
+            0,
+          );
 
           cards.forEach((card, i) => {
             const dock = integrations[i].dock;
@@ -158,6 +169,12 @@ export function IntegrationsStrip() {
               pulseRef.current,
               { scale: 1.4, opacity: 0.35, ease: "none", duration: 0.25 },
               0.65,
+            )
+            // Data starts streaming into the hub once it's connected.
+            .to(
+              packetsRef.current,
+              { opacity: 1, ease: "none", duration: 0.3 },
+              0.7,
             );
         },
 
@@ -207,18 +224,67 @@ export function IntegrationsStrip() {
       ref={sectionRef}
       className="relative scroll-mt-[var(--header-h)] overflow-hidden border-y border-trail-border bg-trail-bg-deep"
     >
-      <ArtIsolate>
-        <TopoBackdrop opacity={0.12} />
-      </ArtIsolate>
-      <div className="section-wash-orange pointer-events-none absolute inset-0 z-0 opacity-20" />
+      <div className="section-wash-orange pointer-events-none absolute inset-0 z-0 opacity-50" />
+
+      {/* Live data-flow backdrop */}
+      <div
+        ref={bgRef}
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 will-change-transform"
+      >
+        <div className="stack-grid absolute inset-0" />
+        <div className="absolute -left-24 top-[-12%] size-[420px] rounded-full bg-trail-orange/10 blur-3xl" />
+        <div className="absolute -right-20 bottom-[-14%] size-[460px] rounded-full bg-trail-cyan/10 blur-3xl" />
+        <svg
+          className="absolute inset-0 h-full w-full"
+          preserveAspectRatio="none"
+          viewBox="0 0 1200 600"
+          aria-hidden
+        >
+          <g stroke="rgba(14,116,144,0.45)">
+            <path
+              className="stack-stream"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDuration: "5s" }}
+              d="M-50,120 C300,70 620,170 1250,120"
+            />
+            <path
+              className="stack-stream"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDuration: "6.5s" }}
+              d="M-50,300 C380,250 780,350 1250,300"
+            />
+            <path
+              className="stack-stream"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDuration: "5.8s" }}
+              d="M-50,470 C340,520 700,420 1250,480"
+            />
+          </g>
+          <g stroke="rgba(234,88,12,0.35)">
+            <path
+              className="stack-stream"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDuration: "7.4s", animationDirection: "reverse" }}
+              d="M-50,210 C420,180 820,250 1250,205"
+            />
+            <path
+              className="stack-stream"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDuration: "6.8s", animationDirection: "reverse" }}
+              d="M-50,390 C360,430 760,360 1250,400"
+            />
+          </g>
+        </svg>
+      </div>
 
       <PageContainer className="relative grid items-center gap-10 py-12 lg:min-h-screen lg:grid-cols-[0.95fr_1.05fr] lg:gap-14 lg:py-0">
         <div ref={copyRef} className="relative z-10 text-center lg:py-16 lg:text-left xl:py-20">
           <p className="eyebrow text-trail-orange">Your existing stack</p>
-          <h2 className="mt-2 text-xl font-bold text-trail-ink sm:text-2xl">
+          <h2 className="display-md mt-3 text-trail-ink">
             Plugs into what you already run — nothing to rip out
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-trail-muted sm:text-base lg:mx-0">
+          <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-relaxed text-trail-muted sm:text-base lg:mx-0">
             KennelEyes reads Gingr, When I Work, and QuickBooks with read-only
             access. Scroll — watch your tools connect to one live dashboard.
           </p>
@@ -245,8 +311,8 @@ export function IntegrationsStrip() {
           </div>
           <div ref={mobileHubRef} className="will-change-transform">
             <div
-              style={{ background: PANEL_BG }}
-              className="rounded-2xl border border-trail-cyan/25 px-6 py-5 text-center shadow-[0_0_40px_-10px_rgba(34,211,238,0.4)]"
+              style={{ background: PANEL_BG, boxShadow: PANEL_SHADOW }}
+              className="rounded-2xl border border-trail-cyan/40 px-6 py-5 text-center"
             >
               <span className="font-display text-lg font-bold text-trail-cyan">
                 KennelEyes
@@ -264,12 +330,12 @@ export function IntegrationsStrip() {
             className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2"
             viewBox="-170 -170 340 340"
             aria-hidden
-            style={{ filter: "drop-shadow(0 0 5px rgba(34,211,238,0.55))" }}
+            style={{ filter: "drop-shadow(0 0 4px rgba(14,116,144,0.35))" }}
           >
             <defs>
               <linearGradient id="lineFade" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgba(34,211,238,0.95)" />
-                <stop offset="100%" stopColor="rgba(34,211,238,0.45)" />
+                <stop offset="0%" stopColor="rgba(14,116,144,0.95)" />
+                <stop offset="100%" stopColor="rgba(14,116,144,0.5)" />
               </linearGradient>
             </defs>
             {integrations.map((item, i) => (
@@ -291,9 +357,45 @@ export function IntegrationsStrip() {
                 cx={item.dock.x * 0.66}
                 cy={item.dock.y * 0.66}
                 r="3"
-                fill="rgb(34,211,238)"
+                fill="rgb(14,116,144)"
               />
             ))}
+
+            {/* Live data packets flowing from each tool into the hub */}
+            <g
+              ref={packetsRef}
+              className="hub-packets"
+              style={{
+                opacity: 0,
+                filter: "drop-shadow(0 0 3px rgba(14,116,144,0.55))",
+              }}
+            >
+              {integrations.map((item) => (
+                <g key={`${item.name}-packet`}>
+                  <circle r="3.4" fill="rgb(14,116,144)">
+                    <animateMotion
+                      dur="2.4s"
+                      repeatCount="indefinite"
+                      calcMode="linear"
+                      keyPoints="1;0"
+                      keyTimes="0;1"
+                      path={item.line}
+                    />
+                  </circle>
+                  <circle r="2.4" fill="rgb(234,88,12)">
+                    <animateMotion
+                      dur="2.4s"
+                      begin="1.2s"
+                      repeatCount="indefinite"
+                      calcMode="linear"
+                      keyPoints="1;0"
+                      keyTimes="0;1"
+                      path={item.line}
+                    />
+                  </circle>
+                </g>
+              ))}
+            </g>
           </svg>
 
           <div
@@ -322,8 +424,8 @@ export function IntegrationsStrip() {
             />
             <div
               ref={hubRef}
-              style={{ background: PANEL_BG }}
-              className="relative rounded-2xl border border-trail-cyan/25 px-8 py-6 text-center shadow-[0_0_70px_-6px_rgba(34,211,238,0.55)]"
+              style={{ background: PANEL_BG, boxShadow: PANEL_SHADOW }}
+              className="relative rounded-2xl border border-trail-cyan/40 px-8 py-6 text-center"
             >
               <span className="font-display text-xl font-bold text-trail-cyan">
                 KennelEyes

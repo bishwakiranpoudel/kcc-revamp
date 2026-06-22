@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
-import { ArtIsolate, DataRangeBackdrop } from "@/components/revamp/trail-art";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -127,10 +126,7 @@ export function ProductFeatures() {
       ref={sectionRef}
       className="trail-section relative scroll-mt-[var(--header-h)] overflow-hidden"
     >
-      <ArtIsolate>
-        <DataRangeBackdrop opacity={0.38} />
-      </ArtIsolate>
-      <div className="section-wash-purple absolute inset-0 z-0 opacity-80" />
+      <div className="section-wash-purple absolute inset-0 z-0 opacity-70" />
 
       <PageContainer className="flex min-h-[min(100svh,800px)] flex-col justify-center py-12 md:min-h-screen md:py-16">
         <div ref={headerRef}>
@@ -155,10 +151,10 @@ export function ProductFeatures() {
                 <span className="font-mono text-[0.6875rem] text-trail-orange">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-display mt-2 text-lg font-bold leading-snug text-trail-ink">
+                <h3 className="heading-card mt-2 text-trail-ink">
                   {feature.title}
                 </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-trail-muted">
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-trail-muted">
                   {feature.body}
                 </p>
               </article>

@@ -30,22 +30,29 @@ const steps = [
   },
 ];
 
-const ACTIVE = {
-  borderColor: "rgba(34, 211, 238, 0.45)",
-  backgroundColor: "rgba(245, 240, 230, 0.08)",
+const NODE_ACTIVE = {
+  backgroundColor: "var(--trail-cyan)",
+  borderColor: "var(--trail-cyan)",
+  color: "#ffffff",
+  scale: 1.12,
+  boxShadow: "0 0 0 6px color-mix(in srgb, var(--trail-cyan) 16%, transparent)",
 };
 
-const INACTIVE = {
-  borderColor: "rgba(245, 240, 230, 0.12)",
-  backgroundColor: "rgba(245, 240, 230, 0)",
+const NODE_INACTIVE = {
+  backgroundColor: "var(--trail-bg)",
+  borderColor: "var(--trail-border-strong)",
+  color: "var(--trail-ink-muted)",
+  scale: 1,
+  boxShadow: "0 0 0 0px rgba(0,0,0,0)",
 };
 
 export function StickySplitSteps() {
   const pinRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const titleRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const copyRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const railFillRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -53,47 +60,75 @@ export function StickySplitSteps() {
 
     const ctx = gsap.context(() => {
       const stepEls = stepRefs.current.filter(Boolean) as HTMLLIElement[];
+      const nodes = nodeRefs.current.filter(Boolean) as HTMLDivElement[];
       const titles = titleRefs.current.filter(Boolean) as HTMLParagraphElement[];
       const panels = panelRefs.current.filter(Boolean) as HTMLDivElement[];
-      const copies = copyRefs.current.filter(Boolean) as HTMLParagraphElement[];
+      const rail = railFillRef.current;
+      const count = panels.length;
 
-      gsap.set(stepEls, { ...INACTIVE });
-      gsap.set(stepEls[0], { ...ACTIVE });
-      gsap.set(titles, { color: "var(--trail-ink-muted)" });
-      gsap.set(titles[0], { color: "var(--trail-ink)" });
+      const setBase = () => {
+        gsap.set(nodes, { ...NODE_INACTIVE });
+        gsap.set(nodes[0], { ...NODE_ACTIVE });
+        gsap.set(titles, { color: "var(--trail-ink-muted)" });
+        gsap.set(titles[0], { color: "var(--trail-ink)" });
+      };
 
-      gsap.set(panels, { opacity: 0, y: 28, scale: 0.96, pointerEvents: "none" });
-      gsap.set(panels[0], { opacity: 1, y: 0, scale: 1, pointerEvents: "auto" });
-      gsap.set(copies, { opacity: 0, y: 12 });
-      gsap.set(copies[0], { opacity: 1, y: 0 });
+      // Fill % that lands the rail's leading edge exactly on node `i`'s center.
+      const fillFor = (i: number) => (count > 1 ? (i / (count - 1)) * 100 : 100);
 
       ScrollTrigger.matchMedia({
         "(min-width: 1024px)": () => {
+          setBase();
+          gsap.set(panels, {
+            opacity: 0,
+            rotateY: 10,
+            scale: 0.94,
+            yPercent: 4,
+            pointerEvents: "none",
+          });
+          gsap.set(panels[0], {
+            opacity: 1,
+            rotateY: 0,
+            scale: 1,
+            yPercent: 0,
+            pointerEvents: "auto",
+          });
+          gsap.set(rail, { "--how-fill": fillFor(0) });
+
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: pinRef.current,
               start: "top top",
               end: "+=300%",
               pin: true,
-              scrub: 1.2,
+              scrub: 1.1,
               invalidateOnRefresh: true,
             },
           });
 
-          const segment = 1 / stepEls.length;
+          const segment = 1 / count;
 
-          stepEls.forEach((_, i) => {
-            if (i === 0) return;
-
+          for (let i = 1; i < count; i++) {
             const t = i * segment;
 
-            stepEls.forEach((step, j) => {
+            // Rail advances to node `i` exactly as it activates.
+            tl.to(
+              rail,
+              {
+                "--how-fill": fillFor(i),
+                duration: segment * 0.5,
+                ease: "power1.inOut",
+              },
+              t,
+            );
+
+            nodes.forEach((node, j) => {
               tl.to(
-                step,
+                node,
                 {
-                  ...(j === i ? ACTIVE : INACTIVE),
-                  duration: segment * 0.35,
-                  ease: "none",
+                  ...(j === i ? NODE_ACTIVE : NODE_INACTIVE),
+                  duration: segment * 0.5,
+                  ease: "power1.inOut",
                 },
                 t,
               );
@@ -103,8 +138,9 @@ export function StickySplitSteps() {
               tl.to(
                 title,
                 {
-                  color: j === i ? "var(--trail-ink)" : "var(--trail-ink-muted)",
-                  duration: segment * 0.35,
+                  color:
+                    j === i ? "var(--trail-ink)" : "var(--trail-ink-muted)",
+                  duration: segment * 0.5,
                   ease: "none",
                 },
                 t,
@@ -115,57 +151,62 @@ export function StickySplitSteps() {
               panels[i - 1],
               {
                 opacity: 0,
-                y: -24,
+                rotateY: -10,
                 scale: 0.96,
+                yPercent: -4,
                 pointerEvents: "none",
-                duration: segment * 0.4,
-                ease: "none",
+                duration: segment * 0.42,
+                ease: "power1.in",
               },
               t,
-            )
-              .to(
-                copies[i - 1],
-                { opacity: 0, y: -8, duration: segment * 0.3, ease: "none" },
-                t,
-              )
-              .to(
-                panels[i],
-                {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  pointerEvents: "auto",
-                  duration: segment * 0.4,
-                  ease: "none",
-                },
-                t + segment * 0.08,
-              )
-              .to(
-                copies[i],
-                { opacity: 1, y: 0, duration: segment * 0.35, ease: "none" },
-                t + segment * 0.12,
-              );
-          });
+            ).fromTo(
+              panels[i],
+              { opacity: 0, rotateY: 10, scale: 0.94, yPercent: 4 },
+              {
+                opacity: 1,
+                rotateY: 0,
+                scale: 1,
+                yPercent: 0,
+                pointerEvents: "auto",
+                duration: segment * 0.5,
+                ease: "power2.out",
+              },
+              t + segment * 0.12,
+            );
+          }
         },
 
         "(max-width: 1023px)": () => {
-          gsap.set(panels, { opacity: 1, y: 0, scale: 1, pointerEvents: "auto" });
-          gsap.set(copies, { opacity: 1, y: 0 });
+          setBase();
+          gsap.set(panels, {
+            opacity: 1,
+            rotateY: 0,
+            scale: 1,
+            yPercent: 0,
+            pointerEvents: "auto",
+          });
+          gsap.set(rail, { "--how-fill": fillFor(0) });
 
-          function highlightMobile(active: number) {
-            stepEls.forEach((step, j) => {
-              gsap.to(step, {
-                ...(j === active ? ACTIVE : INACTIVE),
+          const highlightMobile = (active: number) => {
+            nodes.forEach((node, j) => {
+              gsap.to(node, {
+                ...(j === active ? NODE_ACTIVE : NODE_INACTIVE),
                 duration: 0.35,
                 overwrite: "auto",
               });
               gsap.to(titles[j], {
-                color: j === active ? "var(--trail-ink)" : "var(--trail-ink-muted)",
+                color:
+                  j === active ? "var(--trail-ink)" : "var(--trail-ink-muted)",
                 duration: 0.35,
                 overwrite: "auto",
               });
             });
-          }
+            gsap.to(rail, {
+              "--how-fill": fillFor(active),
+              duration: 0.4,
+              overwrite: "auto",
+            });
+          };
 
           stepEls.forEach((step, i) => {
             ScrollTrigger.create({
@@ -180,7 +221,7 @@ export function StickySplitSteps() {
           panels.forEach((panel) => {
             gsap.fromTo(
               panel,
-              { opacity: 0.4, y: 20 },
+              { opacity: 0.4, y: 24 },
               {
                 opacity: 1,
                 y: 0,
@@ -201,8 +242,12 @@ export function StickySplitSteps() {
   }, []);
 
   return (
-    <section id="how" ref={pinRef} className="trail-section relative overflow-hidden lg:h-screen">
-      <PageContainer className="py-[calc(var(--header-h)+1rem)] lg:grid lg:h-full lg:items-center lg:gap-14 lg:py-[calc(var(--header-h)+1rem)] lg:grid-cols-[0.95fr_1.05fr]">
+    <section
+      id="how"
+      ref={pinRef}
+      className="trail-section relative overflow-hidden lg:h-screen"
+    >
+      <PageContainer className="py-[calc(var(--header-h)+1rem)] lg:grid lg:h-full lg:items-center lg:gap-16 lg:py-[calc(var(--header-h)+1rem)] lg:grid-cols-[0.9fr_1.1fr]">
         <div className="lg:sticky lg:top-[calc(var(--header-h)+1rem)] lg:self-start">
           <SectionHeader
             eyebrow="How it works"
@@ -210,59 +255,66 @@ export function StickySplitSteps() {
             description="No data team, no spreadsheets, no IT project. Three steps and you're watching real numbers from every location."
           />
 
-          <ol className="mt-8 space-y-3 sm:mt-10">
-            {steps.map((step, i) => (
-              <li
-                key={step.title}
-                ref={(el) => {
-                  stepRefs.current[i] = el;
-                }}
-                className="how-step rounded-2xl border px-4 py-3.5 sm:px-5 sm:py-4"
-                style={
-                  i === 0
-                    ? {
-                        borderColor: ACTIVE.borderColor,
-                        backgroundColor: ACTIVE.backgroundColor,
-                      }
-                    : undefined
-                }
-              >
-                <span className="font-mono text-[0.6875rem] text-trail-orange">
-                  0{i + 1}
-                </span>
-                <p
+          <div className="how-stepper mt-9 sm:mt-11">
+            <span aria-hidden className="how-rail" />
+            <span ref={railFillRef} aria-hidden className="how-rail-fill" />
+            <ol className="flex flex-col gap-7">
+              {steps.map((step, i) => (
+                <li
+                  key={step.title}
                   ref={(el) => {
-                    titleRefs.current[i] = el;
+                    stepRefs.current[i] = el;
                   }}
-                  className="mt-1 font-semibold"
-                  style={{
-                    color: i === 0 ? "var(--trail-ink)" : "var(--trail-ink-muted)",
-                  }}
+                  className="grid grid-cols-[2.75rem_1fr] items-start gap-4"
                 >
-                  {step.title}
-                </p>
-              </li>
-            ))}
-          </ol>
+                  <div
+                    ref={(el) => {
+                      nodeRefs.current[i] = el;
+                    }}
+                    className="how-node"
+                  >
+                    0{i + 1}
+                  </div>
+                  <div className="pt-1.5">
+                    <p
+                      ref={(el) => {
+                        titleRefs.current[i] = el;
+                      }}
+                      className="heading-card"
+                    >
+                      {step.title}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
 
-        <div className="relative mt-10 lg:mt-0">
-          <div className="space-y-8 lg:relative lg:h-[min(400px,52vh)] lg:space-y-0">
+        <div className="how-stage relative mt-12 lg:mt-0 lg:h-[min(460px,60vh)]">
+          <div aria-hidden className="how-stage-glow hidden lg:block" />
+          <div aria-hidden className="how-stage-shadow hidden lg:block" />
+          <div
+            className="how-stage-frame relative z-10 space-y-8 lg:space-y-0"
+            style={{ perspective: "1400px" }}
+          >
             {steps.map((step, i) => (
               <div
                 key={step.title}
                 ref={(el) => {
                   panelRefs.current[i] = el;
                 }}
-                className="how-panel trail-card flex min-h-[280px] flex-col items-center justify-center rounded-3xl p-6 sm:min-h-[320px] sm:p-8 lg:absolute lg:inset-0 lg:min-h-0"
+                className="how-panel flex min-h-[300px] flex-col items-center justify-center p-6 will-change-transform sm:min-h-[340px] sm:p-8 lg:min-h-0"
               >
                 {step.visual === "orbit" && (
-                  <div className="relative size-48 sm:size-56">
-                    <div className="absolute inset-0 animate-[spin_40s_linear_infinite] rounded-full border border-dashed border-trail-cyan/30" />
-                    <div className="absolute inset-[16%] rounded-full border border-trail-border/50" />
-                    <div className="absolute left-1/2 top-1/2 flex size-[36%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-trail-cyan/40 bg-trail-surface-strong text-center shadow-[0_0_30px_-8px_rgba(34,211,238,0.5)]">
-                      <span className="font-display text-[0.625rem] font-bold leading-tight text-trail-cyan sm:text-[0.6875rem]">
-                        Kennel<br />Eyes
+                  <div className="relative size-52 sm:size-60">
+                    <div className="how-orbit-ring absolute inset-0 animate-[spin_44s_linear_infinite] rounded-full border border-dashed border-trail-cyan/35" />
+                    <div className="how-orbit-ring absolute inset-[14%] animate-[spin_30s_linear_infinite_reverse] rounded-full border border-trail-border/60" />
+                    <div className="absolute left-1/2 top-1/2 flex size-[34%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-trail-cyan/45 bg-trail-surface-strong text-center shadow-[0_8px_30px_-8px_rgba(14,116,144,0.55)]">
+                      <span className="font-display text-[0.6875rem] font-extrabold leading-tight text-trail-cyan sm:text-xs">
+                        Kennel
+                        <br />
+                        Eyes
                       </span>
                     </div>
                     {INTEGRATIONS.map((name, j) => {
@@ -272,14 +324,14 @@ export function StickySplitSteps() {
                           key={name}
                           className="absolute -translate-x-1/2 -translate-y-1/2"
                           style={{
-                            left: `${50 + Math.cos(a) * 38}%`,
-                            top: `${50 + Math.sin(a) * 38}%`,
+                            left: `${50 + Math.cos(a) * 40}%`,
+                            top: `${50 + Math.sin(a) * 40}%`,
                           }}
                         >
                           <BrandLogo
                             name={name}
-                            size={40}
-                            className="ring-1 ring-trail-cyan/25"
+                            size={44}
+                            className="shadow-[0_6px_20px_-8px_rgba(31,27,22,0.35)] ring-1 ring-trail-cyan/25"
                           />
                         </div>
                       );
@@ -287,31 +339,47 @@ export function StickySplitSteps() {
                   </div>
                 )}
                 {step.visual === "grid" && (
-                  <div className="grid w-full max-w-xs grid-cols-2 gap-2.5 sm:gap-3">
-                    {["Northgate", "Harbor", "Cedar", "All sites"].map((loc) => (
-                      <span
+                  <div className="grid w-full max-w-xs grid-cols-2 gap-3">
+                    {[
+                      { loc: "Northgate", on: false },
+                      { loc: "Harbor", on: true },
+                      { loc: "Cedar", on: false },
+                      { loc: "All sites", on: true },
+                    ].map(({ loc, on }) => (
+                      <div
                         key={loc}
-                        className="rounded-xl border border-trail-border px-3 py-2.5 text-center text-xs font-semibold sm:px-4 sm:py-3 sm:text-sm"
+                        className={`flex items-center justify-between gap-2 rounded-xl border px-3.5 py-3 text-left text-sm font-semibold shadow-[var(--trail-card-shadow)] sm:px-4 ${
+                          on
+                            ? "border-trail-cyan/45 bg-[color-mix(in_srgb,var(--trail-cyan)_8%,transparent)] text-trail-ink"
+                            : "border-trail-border bg-trail-surface text-trail-muted"
+                        }`}
                       >
-                        {loc}
-                      </span>
+                        <span className="truncate">{loc}</span>
+                        <span
+                          className={`size-2 shrink-0 rounded-full ${
+                            on ? "bg-trail-cyan" : "bg-trail-border-strong"
+                          }`}
+                        />
+                      </div>
                     ))}
                   </div>
                 )}
                 {step.visual === "pulse" && (
-                  <div className="relative flex size-32 items-center justify-center rounded-full border border-trail-orange/35 sm:size-40">
-                    <div className="absolute inset-5 rounded-full bg-trail-cyan/15 animate-pulse" />
-                    <span className="font-display text-2xl font-bold text-trail-cyan">
-                      LIVE
-                    </span>
+                  <div className="relative flex size-44 items-center justify-center sm:size-48">
+                    <div className="how-pulse-ring absolute inset-0 rounded-full border border-trail-orange/30" />
+                    <div className="how-pulse-ring absolute inset-[12%] rounded-full border border-trail-cyan/25" />
+                    <div className="how-pulse-core absolute inset-[24%] animate-pulse rounded-full bg-trail-cyan/15" />
+                    <div className="relative flex flex-col items-center">
+                      <span className="font-display text-2xl font-extrabold text-trail-cyan sm:text-3xl">
+                        LIVE
+                      </span>
+                      <span className="font-mono mt-1 text-[0.625rem] text-trail-muted">
+                        updating now
+                      </span>
+                    </div>
                   </div>
                 )}
-                <p
-                  ref={(el) => {
-                    copyRefs.current[i] = el;
-                  }}
-                  className="mt-5 max-w-sm px-2 text-center text-sm leading-relaxed text-trail-muted"
-                >
+                <p className="mt-6 max-w-sm px-2 text-center text-[0.9375rem] leading-relaxed text-trail-muted">
                   {step.copy}
                 </p>
               </div>

@@ -47,10 +47,10 @@ export function SiteHeader() {
       }`}
     >
       <div
-        className={`flex w-full max-w-[var(--page-max)] items-center justify-between rounded-full px-4 py-2.5 sm:px-5 sm:py-3 ${
-          onDemo
+        className={`flex w-full max-w-[var(--page-max)] items-center justify-between rounded-full px-4 py-2.5 transition-colors sm:px-5 sm:py-3 ${
+          onDemo || scrolled
             ? "border border-line bg-surface/90 shadow-lg shadow-navy-900/10 backdrop-blur-md"
-            : `glass-pill ${scrolled ? "shadow-[0_8px_40px_rgba(0,0,0,0.45)]" : ""}`
+            : "glass-pill"
         }`}
       >
         <Link
@@ -94,7 +94,7 @@ export function SiteHeader() {
             className={`rounded-full px-5 py-2 text-sm font-bold transition-transform hover:scale-105 ${
               onDemo
                 ? "bg-signal-strong text-white"
-                : "bg-trail-cyan text-black"
+                : "bg-trail-cyan text-white"
             }`}
           >
             Book a demo

@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { PageContainer } from "@/components/revamp/section-ui";
-import { ArtIsolate, TopoBackdrop, TrailPetImage } from "@/components/revamp/trail-art";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -104,17 +103,6 @@ export function HeroZoom() {
 
   return (
     <div ref={pinRef} className="trail-section relative min-h-screen overflow-hidden">
-      <ArtIsolate>
-        <TopoBackdrop opacity={0.1} />
-        <TrailPetImage
-          src="/graphics/dog-hero.png"
-          width={520}
-          height={640}
-          priority
-          className="absolute -right-[2%] bottom-[8%] hidden w-[min(38vw,20rem)] max-w-none -scale-x-100 opacity-85 sm:block lg:opacity-90"
-        />
-      </ArtIsolate>
-
       <div className="section-wash-orange absolute inset-0 z-0 halftone opacity-80" />
 
       <div
@@ -140,12 +128,12 @@ export function HeroZoom() {
             <span ref={line1Ref} className="block will-change-transform">
               Stop finding out about a bad week
             </span>
-            <span ref={line2Ref} className="text-gradient-trail block font-light italic will-change-transform">
+            <span ref={line2Ref} className="text-gradient-trail text-emph block will-change-transform">
               ten days too late
             </span>
           </h1>
 
-          <p ref={subRef} className="mt-6 max-w-xl border-l-2 border-trail-border pl-5 text-base leading-relaxed text-trail-muted sm:pl-6 sm:text-lg">
+          <p ref={subRef} className="lead mt-6 max-w-xl border-l-2 border-trail-border pl-5 text-trail-muted sm:pl-6">
             You run your locations on Gingr, When I Work, and QuickBooks — then
             stitch the real numbers together by hand.{" "}
             <span className="font-semibold text-trail-ink">KennelEyes</span> puts

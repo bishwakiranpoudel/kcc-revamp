@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import Image from "next/image";
 import { APP_URL } from "@/lib/site";
 import { PageContainer } from "@/components/revamp/section-ui";
-import { ArtIsolate, TopoBackdrop, TrailScene } from "@/components/revamp/trail-art";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,8 +14,8 @@ export function FinalCta() {
   const sectionRef = useRef<HTMLElement>(null);
   const backRef = useRef<HTMLDivElement>(null);
   const frontRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const petRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -46,17 +46,22 @@ export function FinalCta() {
         },
       });
 
-      gsap.to(petRef.current, {
-        y: -24,
-        ease: "none",
-        force3D: true,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
+      gsap.fromTo(
+        photoRef.current,
+        { y: 40, scale: 1.06 },
+        {
+          y: -40,
+          scale: 1.06,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
         },
-      });
+      );
 
       gsap.fromTo(
         headlineRef.current,
@@ -84,18 +89,22 @@ export function FinalCta() {
       ref={sectionRef}
       className="trail-section relative overflow-hidden py-[var(--section-py)]"
     >
-      <ArtIsolate>
-        <TopoBackdrop opacity={0.14} />
-        <div
-          ref={petRef}
-          className="absolute inset-x-0 bottom-0 h-[min(70%,30rem)] will-change-transform"
-        >
-          <TrailScene src="/graphics/dog-cta.png" position="bottom" opacity={0.45} />
-        </div>
-      </ArtIsolate>
+      <div
+        ref={photoRef}
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 will-change-transform"
+      >
+        <Image
+          src="/graphics/dog-cta-light.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="cta-photo object-cover object-bottom"
+        />
+      </div>
 
-      <div ref={backRef} className="section-wash-orange absolute inset-0 z-0 opacity-70" />
-      <div ref={frontRef} className="section-wash-purple absolute inset-0 z-0 opacity-40" />
+      <div ref={backRef} className="section-wash-orange absolute inset-0 z-0 opacity-80" />
+      <div ref={frontRef} className="section-wash-purple absolute inset-0 z-0 opacity-50" />
 
       <PageContainer className="relative z-10 text-center">
         <p className="eyebrow text-trail-orange">Get started</p>
@@ -103,9 +112,10 @@ export function FinalCta() {
           ref={headlineRef}
           className="display-lg mx-auto mt-4 max-w-3xl"
         >
-          See your real numbers this week
+          See your real numbers{" "}
+          <span className="text-emph text-trail-orange">this week</span>
         </h2>
-        <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-trail-muted sm:text-lg">
+        <p className="lead mx-auto mt-5 max-w-lg text-trail-muted">
           Book a 30-minute demo. We&apos;ll connect your Gingr, When I Work, and
           QuickBooks accounts and put every location on one screen using your
           data — not a canned tour. No card. No commitment.

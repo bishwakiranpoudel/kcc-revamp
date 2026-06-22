@@ -5,7 +5,7 @@ export function TrailDivider() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none relative z-[1] -my-1 py-3 opacity-40 sm:py-4 sm:opacity-50"
+      className="trail-dark pointer-events-none relative z-[1] -my-px bg-trail-bg py-6 sm:py-8"
     >
       <div className="page-container">
         <Image
@@ -13,7 +13,7 @@ export function TrailDivider() {
           alt=""
           width={1400}
           height={350}
-          className="mx-auto h-10 w-full max-w-3xl object-contain sm:h-12"
+          className="mx-auto h-10 w-full max-w-3xl object-contain opacity-70 mix-blend-screen sm:h-12"
         />
       </div>
     </div>

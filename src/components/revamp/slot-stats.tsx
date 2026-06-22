@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
-import { ArtIsolate, OrbitBackdrop } from "@/components/revamp/trail-art";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,10 +97,7 @@ export function SlotStats() {
       ref={pinRef}
       className="relative flex min-h-[min(100svh,720px)] flex-col items-center justify-center overflow-hidden bg-trail-bg-orbit py-16 text-trail-ink md:min-h-screen md:py-0"
     >
-      <ArtIsolate>
-        <OrbitBackdrop opacity={0.32} />
-      </ArtIsolate>
-      <div className="section-wash-cyan absolute inset-0 z-0 opacity-35" />
+      <div className="section-wash-cyan absolute inset-0 z-0 opacity-60" />
 
       <PageContainer className="relative z-10 text-center">
         <SectionHeader
@@ -111,9 +107,9 @@ export function SlotStats() {
           description="Scroll to cycle through what early customers report after putting every location on one screen."
         />
 
-        <div className="relative mx-auto mt-10 h-24 w-full max-w-[min(100%,20rem)] overflow-hidden rounded-2xl border border-trail-cyan/25 bg-trail-surface-strong shadow-[0_0_70px_-18px_rgba(34,211,238,0.5)] sm:mt-12 sm:h-28 sm:max-w-sm">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-trail-bg-orbit/90 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-trail-bg-orbit/90 to-transparent" />
+        <div className="relative mx-auto mt-10 h-24 w-full max-w-[min(100%,20rem)] overflow-hidden rounded-2xl border border-trail-cyan/40 bg-trail-surface-strong shadow-[var(--trail-card-shadow)] sm:mt-12 sm:h-28 sm:max-w-sm">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-white/95 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-white/95 to-transparent" />
           <div ref={reelRef} className="will-change-transform">
             {stats.map((s, i) => (
               <div

@@ -86,7 +86,7 @@ export function SummitPortal() {
     <div
       id="summit"
       ref={pinRef}
-      className="relative min-h-[min(100svh,680px)] overflow-hidden bg-trail-bg-deep text-trail-ink md:min-h-screen"
+      className="trail-dark relative min-h-[min(100svh,680px)] overflow-hidden bg-trail-bg-deep text-trail-ink md:min-h-screen"
       style={{ perspective: "900px" }}
     >
       <div
@@ -119,9 +119,9 @@ export function SummitPortal() {
           <p className="eyebrow text-trail-cream">Mission Control</p>
           <h2 className="display-lg mt-4">
             This is the screen you&apos;d open{" "}
-            <span className="text-trail-cyan">every morning</span>
+            <span className="text-emph text-trail-cyan">every morning</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-trail-cream/85 sm:text-lg">
+          <p className="lead mx-auto mt-5 max-w-lg text-trail-cream/85">
             Revenue by service line, payroll as a % of revenue, occupancy by
             site, and QuickBooks P&L — one dashboard, every location, live.
           </p>

@@ -1,5 +1,4 @@
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
-import { ArtIsolate, TopoBackdrop } from "@/components/revamp/trail-art";
 
 const quotes = [
   {
@@ -25,10 +24,7 @@ const quotes = [
 export function SocialProof() {
   return (
     <section className="trail-section relative overflow-hidden py-[var(--section-py)]">
-      <ArtIsolate>
-        <TopoBackdrop opacity={0.14} />
-      </ArtIsolate>
-      <div className="section-wash-purple absolute inset-0 z-0 opacity-30" />
+      <div className="section-wash-purple absolute inset-0 z-0 opacity-50" />
 
       <PageContainer>
         <SectionHeader

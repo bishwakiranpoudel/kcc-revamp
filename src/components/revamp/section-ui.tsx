@@ -69,9 +69,9 @@ export function SectionHeader({
   return (
     <div className={`max-w-3xl ${alignClass}`}>
       <p className={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
-      <h2 className={`display-lg mt-4 ${titleColor}`}>{title}</h2>
+      <h2 className={`display-lg mt-3.5 ${titleColor}`}>{title}</h2>
       {description ? (
-        <p className={`mt-4 max-w-2xl text-base leading-relaxed sm:text-lg ${descColor} ${align === "center" ? "mx-auto" : ""}`}>
+        <p className={`lead mt-5 max-w-2xl ${descColor} ${align === "center" ? "mx-auto" : ""}`}>
           {description}
         </p>
       ) : null}
