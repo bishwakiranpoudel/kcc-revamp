@@ -94,7 +94,27 @@ export function HeroZoom() {
 
       ScrollTrigger.matchMedia({
         "(min-width: 768px)": () => buildTimeline("+=160%"),
-        "(max-width: 767px)": () => buildTimeline("+=110%"),
+
+        // Mobile: don't pin. A pinned hero traps the dashboard card + stats
+        // below the fold. Let the page flow and gently reveal the card instead.
+        "(max-width: 767px)": () => {
+          gsap.fromTo(
+            runnerRef.current,
+            { y: 36, opacity: 0.65, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: runnerRef.current,
+                start: "top 92%",
+                end: "top 58%",
+                scrub: 1,
+              },
+            },
+          );
+        },
       });
     }, pinRef);
 
@@ -239,7 +259,7 @@ export function HeroZoom() {
 
       <a
         href="#demo"
-        className="scroll-cue absolute bottom-6 left-1/2 z-20 -translate-x-1/2 transition-colors hover:text-trail-ink lg:bottom-8"
+        className="scroll-cue absolute bottom-6 left-1/2 z-20 hidden -translate-x-1/2 transition-colors hover:text-trail-ink md:block lg:bottom-8"
       >
         <span className="eyebrow !text-[0.5625rem] !tracking-[0.28em]">
           See the live dashboard

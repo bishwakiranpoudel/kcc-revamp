@@ -128,7 +128,7 @@ export function ProductFeatures() {
     >
       <div className="section-wash-purple absolute inset-0 z-0 opacity-70" />
 
-      <PageContainer className="flex min-h-[min(100svh,800px)] flex-col justify-center py-12 md:min-h-screen md:py-16">
+      <PageContainer className="flex min-h-[min(100svh,800px)] flex-col justify-center py-12 md:min-h-screen md:py-0 md:pt-[calc(var(--header-h)+1rem)] md:pb-10">
         <div ref={headerRef}>
           <SectionHeader
             align="center"
@@ -138,25 +138,29 @@ export function ProductFeatures() {
           />
         </div>
 
-        <div className="mx-auto mt-10 w-full max-w-5xl overflow-hidden rounded-3xl border border-trail-border sm:mt-12">
-          <div className="grid gap-px bg-trail-border sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-7 w-full max-w-5xl overflow-hidden rounded-3xl border border-trail-border sm:mt-9">
+          <div className="grid gap-px bg-trail-border sm:grid-cols-2 md:grid-cols-3">
             {features.map((feature, i) => (
               <article
                 key={feature.title}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                className="feature-card bg-trail-surface-strong p-6 will-change-transform sm:p-7"
+                className="feature-card bg-trail-surface-strong p-5 sm:p-6"
               >
-                <span className="font-mono text-[0.6875rem] text-trail-orange">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="heading-card mt-2 text-trail-ink">
-                  {feature.title}
-                </h3>
-                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-trail-muted">
-                  {feature.body}
-                </p>
+                <div
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
+                  className="will-change-transform"
+                >
+                  <span className="font-mono text-[0.6875rem] text-trail-orange">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="heading-card mt-2 text-trail-ink">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-trail-muted">
+                    {feature.body}
+                  </p>
+                </div>
               </article>
             ))}
           </div>

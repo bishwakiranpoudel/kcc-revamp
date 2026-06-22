@@ -351,16 +351,6 @@ export function IntegrationsStrip() {
                 strokeLinecap="round"
               />
             ))}
-            {integrations.map((item) => (
-              <circle
-                key={`${item.name}-node`}
-                cx={item.dock.x * 0.66}
-                cy={item.dock.y * 0.66}
-                r="3"
-                fill="rgb(14,116,144)"
-              />
-            ))}
-
             {/* Live data packets flowing from each tool into the hub */}
             <g
               ref={packetsRef}

@@ -59,7 +59,6 @@ export function StickySplitSteps() {
     if (reduced || !pinRef.current) return;
 
     const ctx = gsap.context(() => {
-      const stepEls = stepRefs.current.filter(Boolean) as HTMLLIElement[];
       const nodes = nodeRefs.current.filter(Boolean) as HTMLDivElement[];
       const titles = titleRefs.current.filter(Boolean) as HTMLParagraphElement[];
       const panels = panelRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -177,7 +176,8 @@ export function StickySplitSteps() {
         },
 
         "(max-width: 1023px)": () => {
-          setBase();
+          // Mobile: the top stepper is hidden; each panel is a complete step
+          // (number, title, visual, copy) that reveals in sequence as you read.
           gsap.set(panels, {
             opacity: 1,
             rotateY: 0,
@@ -185,50 +185,18 @@ export function StickySplitSteps() {
             yPercent: 0,
             pointerEvents: "auto",
           });
-          gsap.set(rail, { "--how-fill": fillFor(0) });
-
-          const highlightMobile = (active: number) => {
-            nodes.forEach((node, j) => {
-              gsap.to(node, {
-                ...(j === active ? NODE_ACTIVE : NODE_INACTIVE),
-                duration: 0.35,
-                overwrite: "auto",
-              });
-              gsap.to(titles[j], {
-                color:
-                  j === active ? "var(--trail-ink)" : "var(--trail-ink-muted)",
-                duration: 0.35,
-                overwrite: "auto",
-              });
-            });
-            gsap.to(rail, {
-              "--how-fill": fillFor(active),
-              duration: 0.4,
-              overwrite: "auto",
-            });
-          };
-
-          stepEls.forEach((step, i) => {
-            ScrollTrigger.create({
-              trigger: step,
-              start: "top 72%",
-              end: "bottom 28%",
-              onEnter: () => highlightMobile(i),
-              onEnterBack: () => highlightMobile(i),
-            });
-          });
 
           panels.forEach((panel) => {
             gsap.fromTo(
               panel,
-              { opacity: 0.4, y: 24 },
+              { opacity: 0.35, y: 28 },
               {
                 opacity: 1,
                 y: 0,
                 scrollTrigger: {
                   trigger: panel,
-                  start: "top 88%",
-                  end: "top 58%",
+                  start: "top 86%",
+                  end: "top 56%",
                   scrub: 1,
                 },
               },
@@ -255,7 +223,7 @@ export function StickySplitSteps() {
             description="No data team, no spreadsheets, no IT project. Three steps and you're watching real numbers from every location."
           />
 
-          <div className="how-stepper mt-9 sm:mt-11">
+          <div className="how-stepper mt-9 hidden sm:mt-11 lg:block">
             <span aria-hidden className="how-rail" />
             <span ref={railFillRef} aria-hidden className="how-rail-fill" />
             <ol className="flex flex-col gap-7">
@@ -306,6 +274,14 @@ export function StickySplitSteps() {
                 }}
                 className="how-panel flex min-h-[300px] flex-col items-center justify-center p-6 will-change-transform sm:min-h-[340px] sm:p-8 lg:min-h-0"
               >
+                <div className="mb-6 w-full text-center lg:hidden">
+                  <span className="font-mono text-xs font-medium text-trail-orange">
+                    0{i + 1}
+                  </span>
+                  <p className="heading-card mt-1 text-trail-ink">
+                    {step.title}
+                  </p>
+                </div>
                 {step.visual === "orbit" && (
                   <div className="relative size-52 sm:size-60">
                     <div className="how-orbit-ring absolute inset-0 animate-[spin_44s_linear_infinite] rounded-full border border-dashed border-trail-cyan/35" />
