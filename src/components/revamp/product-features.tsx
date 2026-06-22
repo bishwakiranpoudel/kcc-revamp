@@ -9,28 +9,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
-    title: "See revenue before it lands",
-    body: "Know what each location will book this week by service line — projected next to confirmed. No end-of-month surprises.",
+    title: "Revenue by business line, the accurate way",
+    body: "Boarding, daycare, grooming — measured by the revenue the dogs in your care actually generated, not just payments collected. See a single day or analyze the trend.",
   },
   {
-    title: "Catch overstaffed days before payday",
-    body: "Watch labor as a live % of revenue against your target. The morning a site drifts over, you see it — while you can still cut a shift.",
+    title: "Know exactly how full every kennel is",
+    body: "Track occupancy and capacity utilization over any time period and spot the trends. Are you overbooking, or do you have room to grow?",
   },
   {
-    title: "Fill kennels without overbooking",
-    body: "Dogs in-house vs. capacity for every site, with trends that flag the days you're leaving money — or risk — on the table.",
+    title: "Dogs per labor hour — the metric you'll wish you had sooner",
+    body: "Likely a new number for you: how many dogs are you caring for per employee hour worked? It quietly decides your margins, and now you can watch it.",
   },
   {
-    title: "Managers see only their branch",
-    body: "You get the whole group. Each manager gets their location. Everyone sees the numbers they own — nothing more, nothing less.",
+    title: "Match staffing to the dogs in the building",
+    body: "See how labor hours move with the number of dogs in-house, and where scheduled hours drift from hours actually worked — then adjust before it costs you.",
   },
   {
-    title: "Updates while you watch",
-    body: "Numbers refresh on their own as bookings, shifts, and invoices change. Open the screen and it's already current.",
+    title: "Payroll as a % of revenue — your make-or-break number",
+    body: "The one benchmark that's often the difference between success and failure. We pair true revenue with real payroll — hours, rates, and taxes — so the percentage is honest.",
   },
   {
-    title: "Read-only and encrypted",
-    body: "We connect with read-only access and encrypt everything in transit and at rest. KennelEyes can see your numbers, never touch them.",
+    title: "See next week's payroll before it happens",
+    body: "Upcoming reservations next to your staffing plan for the next 1–2 weeks. Overstaffed? Cut hours early. Understaffed? Add shifts before the last-minute bind.",
   },
 ];
 
@@ -134,7 +134,7 @@ export function ProductFeatures() {
             align="center"
             eyebrow="What you get"
             title="Every number you chase, in one place"
-            description="The things you check across five logins every morning — revenue, labor, occupancy, and profit — now on one screen for every location at once."
+            description="The things you check across five logins every morning — revenue, payroll, occupancy, and profit — now on one screen for every location at once."
           />
         </div>
 

@@ -157,8 +157,8 @@ export function HeroZoom() {
             You run your locations on Gingr, When I Work, and QuickBooks — then
             stitch the real numbers together by hand.{" "}
             <span className="font-semibold text-trail-ink">KennelEyes</span> puts
-            revenue, labor, and profit for every site on one live screen, so you
-            catch the money leaks while you can still stop them.
+            revenue, payroll, and profit for every site on one live screen, so
+            you catch the money leaks while you can still stop them.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">

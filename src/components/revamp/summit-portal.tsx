@@ -117,6 +117,9 @@ export function SummitPortal() {
           className="mx-auto max-w-2xl text-center will-change-transform [text-shadow:0_2px_18px_rgba(3,7,18,0.85)]"
         >
           <p className="eyebrow text-trail-cream">Mission Control</p>
+          <p className="font-serif mt-3 text-xl italic text-trail-cream/90 sm:text-2xl">
+            Analyze Your Numbers &amp; Make Consequential Decisions
+          </p>
           <h2 className="display-lg mt-4">
             This is the screen you&apos;d open{" "}
             <span className="text-emph text-trail-cyan">every morning</span>

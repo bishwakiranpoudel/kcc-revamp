@@ -18,7 +18,6 @@ export function SlotStats() {
   const pinRef = useRef<HTMLDivElement>(null);
   const reelRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
-  const itemRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
@@ -26,11 +25,10 @@ export function SlotStats() {
     if (reduced || !pinRef.current || !reelRef.current) return;
 
     const ctx = gsap.context(() => {
-      const measureTravel = () => {
-        const h = itemRef.current?.offsetHeight;
-        const itemH = h && h > 0 ? h : 96;
-        return -itemH * (stats.length - 1);
-      };
+      // Each reel item is exactly as tall as the window, so shifting the reel by
+      // a percentage of its own height lands every value dead-center — at any
+      // breakpoint, without fragile pixel measuring.
+      const travelPct = -100 * ((stats.length - 1) / stats.length);
 
       const updateLabel = (idx: number) => {
         if (labelRef.current) labelRef.current.textContent = stats[idx].label;
@@ -41,8 +39,6 @@ export function SlotStats() {
 
       ScrollTrigger.matchMedia({
         "(min-width: 768px)": () => {
-          const travel = measureTravel();
-
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: pinRef.current,
@@ -61,14 +57,12 @@ export function SlotStats() {
             },
           });
 
-          tl.to(reelRef.current, { y: travel, ease: "none" });
+          tl.to(reelRef.current, { yPercent: travelPct, ease: "none" });
         },
 
         "(max-width: 767px)": () => {
-          const travel = measureTravel();
-
           gsap.to(reelRef.current, {
-            y: travel,
+            yPercent: travelPct,
             ease: "none",
             scrollTrigger: {
               trigger: pinRef.current,
@@ -111,10 +105,9 @@ export function SlotStats() {
           <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-white/95 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-white/95 to-transparent" />
           <div ref={reelRef} className="will-change-transform">
-            {stats.map((s, i) => (
+            {stats.map((s) => (
               <div
                 key={s.value}
-                ref={i === 0 ? itemRef : undefined}
                 className="font-display flex h-24 items-center justify-center px-4 text-4xl font-extrabold tabular text-trail-cyan sm:h-28 sm:text-6xl"
               >
                 {s.value}

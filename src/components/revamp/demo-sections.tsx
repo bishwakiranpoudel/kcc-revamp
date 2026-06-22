@@ -8,10 +8,10 @@ import { MIcon } from "@/components/m-icon";
 import { SectionHeader } from "@/components/revamp/section-ui";
 
 const dashboardHighlights = [
-  "Revenue by service line — boarding, daycare, grooming",
-  "Payroll as a live % of revenue vs. your target",
-  "Occupancy and capacity for every site",
-  "Roll-up across all locations or drill into one",
+  "Revenue by business line — from the dogs in your care, not just payments collected",
+  "Payroll as a % of revenue vs. your target — the critical kennel benchmark",
+  "Capacity utilization and labor efficiency (dogs per labor hour) for every site",
+  "Reservations vs. staffing, looking 1–2 weeks ahead",
 ];
 
 export function DemoSections() {

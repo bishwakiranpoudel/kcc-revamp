@@ -220,8 +220,8 @@ export function ChaosCollide() {
             description="Gingr for bookings. When I Work for labor. QuickBooks for profit. Plus the spreadsheet you rebuild every Monday — none of them talk to each other."
           />
           <p className="lead mx-auto mt-6 max-w-lg text-trail-cyan">
-            KennelEyes reads all of them and puts revenue, labor, occupancy, and
-            profit for every location on one live screen.
+            KennelEyes reads all of them and puts revenue, payroll, occupancy,
+            and profit for every location on one live screen.
           </p>
         </div>
       </PageContainer>
