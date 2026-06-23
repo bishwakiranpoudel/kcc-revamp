@@ -153,7 +153,7 @@ export function LeadForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="btn-product-primary mt-6 h-12 w-full disabled:opacity-70"
+        className="btn-product-primary mt-6 h-12 w-full justify-center disabled:opacity-70"
       >
         {status === "submitting" ? (
           <>
