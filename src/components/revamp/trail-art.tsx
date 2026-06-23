@@ -219,14 +219,14 @@ export function SummitMountain({
   onReady?: () => void;
 }) {
   return (
-    <div className="relative w-full max-w-6xl">
+    <div className="relative w-full max-w-5xl">
       <Image
-        src="/graphics/transition.png"
+        src="/graphics/dog-summit.png"
         alt=""
-        width={1800}
-        height={700}
+        width={1600}
+        height={1067}
         priority
-        className="trail-mountain-main relative w-full object-contain object-bottom"
+        className="trail-summit-scene relative w-full object-contain object-bottom"
         onLoad={onReady}
       />
     </div>

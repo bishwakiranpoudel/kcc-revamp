@@ -64,7 +64,7 @@ export function ProductFeatures() {
               start: "top top",
               end: "+=260%",
               pin: true,
-              scrub: 1.2,
+              scrub: 0.8,
               invalidateOnRefresh: true,
             },
           });

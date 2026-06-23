@@ -38,7 +38,7 @@ export function SummitPortal() {
             start: "top top",
             end,
             pin: true,
-            scrub: 1.4,
+            scrub: 0.8,
             invalidateOnRefresh: true,
           },
         });

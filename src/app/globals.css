@@ -601,6 +601,24 @@ select:focus-visible,
   filter: brightness(0.92) contrast(1.12) saturate(0.88);
 }
 
+/* Cinematic summit scene (dog + sunrise). Lighten blend drops the near-black
+   background so only the glow shows, and the mask feathers all edges so the
+   image melts into the dark section instead of reading as a hard rectangle. */
+.trail-summit-scene {
+  mix-blend-mode: lighten;
+  filter: contrast(1.08) saturate(1.12) brightness(1.04);
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 82% at 50% 62%,
+    black 42%,
+    transparent 86%
+  );
+  mask-image: radial-gradient(
+    ellipse 78% 82% at 50% 62%,
+    black 42%,
+    transparent 86%
+  );
+}
+
 /* ── Final CTA photographic backdrop ──
    Sits under the warm gradient washes; fades out toward the top so the soft
    FAQ → CTA transition stays intact, and stays light enough for dark text. */

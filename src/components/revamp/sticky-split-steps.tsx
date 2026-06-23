@@ -102,7 +102,7 @@ export function StickySplitSteps() {
               start: "top top",
               end: "+=300%",
               pin: true,
-              scrub: 1.1,
+              scrub: 0.8,
               invalidateOnRefresh: true,
             },
           });

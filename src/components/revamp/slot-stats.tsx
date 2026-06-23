@@ -46,7 +46,7 @@ export function SlotStats() {
               start: "top top",
               end: "+=220%",
               pin: true,
-              scrub: 1.4,
+              scrub: 0.8,
               invalidateOnRefresh: true,
               onUpdate(self) {
                 const idx = Math.min(
@@ -69,7 +69,7 @@ export function SlotStats() {
               trigger: pinRef.current,
               start: "top 75%",
               end: "bottom 25%",
-              scrub: 1.2,
+              scrub: 0.8,
               invalidateOnRefresh: true,
               onUpdate(self) {
                 const idx = Math.min(

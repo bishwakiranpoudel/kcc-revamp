@@ -119,7 +119,7 @@ export function IntegrationsStrip() {
               start: "top top",
               end: "+=200%",
               pin: true,
-              scrub: 1.3,
+              scrub: 0.8,
               invalidateOnRefresh: true,
             },
           });

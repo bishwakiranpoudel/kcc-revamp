@@ -30,7 +30,7 @@ export function FinalCta() {
           trigger: sectionRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: 1.2,
+          scrub: 0.8,
         },
       });
 
@@ -42,7 +42,7 @@ export function FinalCta() {
           trigger: sectionRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: 1.2,
+          scrub: 0.8,
         },
       });
 
@@ -58,7 +58,7 @@ export function FinalCta() {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.2,
+            scrub: 0.8,
           },
         },
       );
@@ -74,7 +74,7 @@ export function FinalCta() {
             trigger: sectionRef.current,
             start: "top 78%",
             end: "top 48%",
-            scrub: 1.2,
+            scrub: 0.8,
           },
         },
       );
