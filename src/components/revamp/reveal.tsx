@@ -56,21 +56,38 @@ export function Reveal({
     }
 
     const ctx = gsap.context(() => {
-      gsap.from(targets, {
-        opacity: 0,
-        y,
-        duration: 0.7,
-        ease: "power3.out",
-        delay,
-        stagger: stagger ? staggerEach : 0,
-        // Clear the inline transform once revealed so hover lifts and layout
-        // transforms (e.g. the featured tier's offset) aren't overridden.
-        clearProps: "transform",
-        scrollTrigger: { trigger: el, start, once: true },
-      });
+      // If the element is already in (or above) the viewport on mount, play
+      // immediately instead of attaching a ScrollTrigger. Otherwise above-the-fold
+      // content can stay stuck at opacity:0 until the user happens to scroll.
+      const rect = el.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.9;
+
+      gsap.fromTo(
+        targets,
+        { opacity: 0, y },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          delay,
+          stagger: stagger ? staggerEach : 0,
+          // Kill any half-finished tween on these targets (e.g. React StrictMode's
+          // double-mount in dev) so they can't freeze at a partial opacity.
+          overwrite: true,
+          // Clear the inline transform once revealed so hover lifts and layout
+          // transforms (e.g. the featured tier's offset) aren't overridden.
+          clearProps: "transform",
+          scrollTrigger: inView ? undefined : { trigger: el, start, once: true },
+        },
+      );
     }, ref);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      // Safety net: never leave content invisible if a tween was interrupted.
+      gsap.set(targets, { clearProps: "opacity,transform" });
+    };
   }, []);
 
   return (
