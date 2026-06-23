@@ -683,7 +683,15 @@ select:focus-visible,
 .light-card {
   background: var(--trail-light-card);
   border: 1px solid color-mix(in oklab, var(--ink) 6%, transparent);
-  box-shadow: 0 22px 48px -26px color-mix(in oklab, var(--navy-900) 65%, transparent);
+  box-shadow: 0 12px 32px -22px color-mix(in oklab, var(--navy-900) 40%, transparent);
+}
+
+/* Crisp white card with a soft, low-contrast shadow — used where the heavier
+   tinted `.light-card` reads too aggressively (e.g. the contact page grid). */
+.soft-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px -18px color-mix(in oklab, var(--navy-900) 24%, transparent);
 }
 
 /* ── KCC app surface (embedded demos) ── */

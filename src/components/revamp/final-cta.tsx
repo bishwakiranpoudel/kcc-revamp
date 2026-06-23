@@ -128,7 +128,7 @@ export function FinalCta() {
           <Link href="#demo" className="btn-trail-secondary">
             See the live dashboard
           </Link>
-          <Link href={`${APP_URL}/login`} className="btn-trail-secondary">
+          <Link href={APP_URL} className="btn-trail-secondary">
             Log in
           </Link>
         </div>

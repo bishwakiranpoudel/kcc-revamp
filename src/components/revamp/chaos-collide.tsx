@@ -33,6 +33,10 @@ export function ChaosCollide() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    // Guards against GSAP callbacks (onUpdate/onRefresh) firing on detached
+    // nodes while React unmounts this section during route navigation.
+    let alive = true;
+
     const electrons = electronRefs.current.filter(Boolean) as HTMLDivElement[];
     const count = electrons.length;
     const atom = atomRef.current;
@@ -48,7 +52,9 @@ export function ChaosCollide() {
     };
 
     const place = (t: number) => {
+      if (!alive || !atom?.isConnected) return;
       electrons.forEach((el, k) => {
+        if (!el.isConnected) return;
         const phase = (k / count) * TWO_PI;
         const tilt = (k / count) * Math.PI; // 0° / 60° / 120° for 3 orbits
         const theta = phase + t * TWO_PI * TURNS;
@@ -139,6 +145,7 @@ export function ChaosCollide() {
     }
 
     return () => {
+      alive = false;
       window.removeEventListener("resize", onResize);
       ctx?.revert();
     };

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
@@ -20,7 +21,7 @@ export function SlotStats() {
   const labelRef = useRef<HTMLParagraphElement>(null);
   const dotsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced || !pinRef.current || !reelRef.current) return;
 
@@ -83,7 +84,13 @@ export function SlotStats() {
       });
     }, pinRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      // ScrollTrigger.matchMedia pins aren't captured by the context, so revert
+      // them explicitly — otherwise the pin-spacer wrapper leaks and React
+      // throws removeChild when this section unmounts during navigation.
+      ScrollTrigger.clearMatchMedia();
+    };
   }, []);
 
   return (

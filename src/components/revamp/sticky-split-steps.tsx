@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -55,7 +56,7 @@ export function StickySplitSteps() {
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const railFillRef = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced || !pinRef.current) return;
 
@@ -207,7 +208,13 @@ export function StickySplitSteps() {
       });
     }, pinRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      // ScrollTrigger.matchMedia pins aren't captured by the context, so revert
+      // them explicitly — otherwise the pin-spacer wrapper leaks and React
+      // throws removeChild when this section unmounts during navigation.
+      ScrollTrigger.clearMatchMedia();
+    };
   }, []);
 
   return (

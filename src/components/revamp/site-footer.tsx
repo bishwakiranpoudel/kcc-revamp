@@ -18,7 +18,7 @@ export function SiteFooter() {
           operators
         </p>
         <Link
-          href="#demo"
+          href="/#demo"
           className="text-sm font-semibold text-trail-cyan transition-opacity hover:opacity-80"
         >
           See the demo

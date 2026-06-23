@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -80,7 +81,7 @@ export function IntegrationsStrip() {
   const bgRef = useRef<HTMLDivElement>(null);
   const packetsRef = useRef<SVGGElement>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced || !sectionRef.current) return;
 
@@ -216,7 +217,13 @@ export function IntegrationsStrip() {
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      // ScrollTrigger.matchMedia pins aren't captured by the context, so revert
+      // them explicitly — otherwise the pin-spacer wrapper leaks and React
+      // throws removeChild when this section unmounts during navigation.
+      ScrollTrigger.clearMatchMedia();
+    };
   }, []);
 
   return (
