@@ -6,12 +6,12 @@ export function SummitPortal() {
   return (
     <section
       id="summit"
-      className="section-surface-alt relative overflow-hidden py-[var(--section-py)]"
+      className="section-fill section-surface-alt relative overflow-hidden py-[var(--section-py)]"
     >
       <PageContainer className="relative z-10">
         <Reveal y={28}>
           <div className="mx-auto max-w-2xl text-center">
-            <p className="eyebrow text-trail-orange">Mission Control</p>
+            <p className="eyebrow text-trail-cyan">Mission Control</p>
             <p className="font-serif mt-3 text-xl italic text-trail-muted sm:text-2xl">
               Analyze Your Numbers &amp; Make Consequential Decisions
             </p>

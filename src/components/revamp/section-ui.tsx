@@ -2,15 +2,10 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { INTEGRATION_LOGOS, type SoftwareItem } from "@/lib/site";
 
-const ACCENT_CLASS: Record<SoftwareItem["accent"], string> = {
-  orange: "bg-trail-orange/12 text-trail-orange",
-  cyan: "bg-trail-cyan/12 text-trail-cyan",
-  green: "bg-trail-green/12 text-trail-green",
-};
-
 /**
  * Generic software category badge (kennel / scheduling / financial).
- * Optional QuickBooks logo when `logoKey` is set (financial software only).
+ * Single-accent treatment: neutral tile + teal monogram, or a white tile
+ * carrying the QuickBooks logo for financial software.
  */
 export function SoftwareBadge({
   item,
@@ -24,11 +19,14 @@ export function SoftwareBadge({
   showLabel?: boolean;
 }) {
   const logoSrc = item.id === "financial" ? INTEGRATION_LOGOS.QuickBooks : undefined;
+  const tileClass = logoSrc
+    ? "bg-white border border-[color:var(--border-hairline)]"
+    : "bg-[color:var(--accent-soft)] text-trail-cyan";
 
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`.trim()}>
       <span
-        className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl font-display text-sm font-extrabold ${ACCENT_CLASS[item.accent]}`}
+        className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl font-display text-sm font-extrabold ${tileClass}`}
         style={{ width: size, height: size }}
       >
         {logoSrc ? (

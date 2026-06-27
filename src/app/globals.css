@@ -16,8 +16,8 @@
   --trail-bg-deep: #f5efe6;
   --trail-bg-race: #ede4d8;
   --trail-bg-orbit: #f7f2ea;
-  --trail-surface: color-mix(in oklab, var(--trail-orange) 3.5%, white);
-  --trail-surface-strong: color-mix(in oklab, var(--trail-cream) 6%, white);
+  --trail-surface: color-mix(in oklab, var(--trail-ink) 3%, white);
+  --trail-surface-strong: #ffffff;
   --trail-surface-soft: color-mix(in oklab, var(--trail-purple) 5%, var(--trail-bg));
   --trail-surface-mint: color-mix(in oklab, var(--trail-green) 6%, var(--trail-bg));
   --trail-surface-sky: color-mix(in oklab, var(--trail-cyan) 7%, var(--trail-bg));
@@ -31,6 +31,26 @@
   --trail-cream: #b45309;
   --trail-cyan: #0e7490;
   --trail-purple: #7c3aed;
+
+  /* ── Single brand accent (teal, aligned to the product signal blue) ──
+     Marketing uses ONE accent. Orange / purple / green are reserved for
+     semantic data (charts, trend up/down) only. */
+  --accent: #0e7490;
+  --accent-strong: #0b5d73;
+  --accent-soft: color-mix(in oklab, var(--accent) 10%, white);
+  --accent-tint: color-mix(in oklab, var(--accent) 6%, var(--trail-bg));
+
+  /* ── Unified elevation + edges ── */
+  --surface-card: #ffffff;
+  --border-hairline: rgba(31, 27, 22, 0.08);
+  --border-hairline-strong: rgba(31, 27, 22, 0.14);
+  --shadow-sm: 0 1px 2px rgba(31, 27, 22, 0.04);
+  --shadow-md:
+    0 1px 2px rgba(31, 27, 22, 0.04),
+    0 10px 30px rgba(31, 27, 22, 0.07);
+  --shadow-lg:
+    0 2px 4px rgba(31, 27, 22, 0.05),
+    0 18px 48px rgba(31, 27, 22, 0.1);
   --trail-glass: rgba(255, 255, 255, 0.72);
   --trail-glass-border: rgba(31, 27, 22, 0.1);
   --trail-light-card: #eef3fb;
@@ -40,21 +60,15 @@
   --trail-glow-orange: rgba(234, 88, 12, 0.2);
   --trail-glow-cyan: rgba(14, 116, 144, 0.18);
   --trail-glow-purple: rgba(124, 58, 237, 0.17);
-  --trail-card-shadow:
-    0 1px 2px rgba(31, 27, 22, 0.04),
-    0 8px 24px rgba(31, 27, 22, 0.06);
-  --radius-card: 1.25rem;
-  --trail-gradient-headline: linear-gradient(
-    90deg,
-    var(--trail-orange),
-    var(--trail-cream),
-    var(--trail-cyan)
-  );
+  --trail-card-shadow: var(--shadow-md);
+  --radius-card: 1rem;
+  --radius-card-lg: 1.25rem;
+  /* Headline emphasis is a single accent hue (no rainbow text). */
+  --trail-gradient-headline: var(--accent);
   --trail-progress: linear-gradient(
     90deg,
-    var(--trail-orange),
-    var(--trail-cyan),
-    var(--trail-green)
+    var(--accent),
+    var(--accent-strong)
   );
 
   /* ── KCC light product surface (demos / app) ── */
@@ -96,7 +110,7 @@
   --radius-pill: 9999px;
 
   --header-h: 4.5rem;
-  --section-py: clamp(4rem, 7vw, 6.5rem);
+  --section-py: clamp(4.5rem, 8vw, 8rem);
   --page-px: clamp(1.25rem, 4vw, 2.5rem);
   --page-max: 72rem;
   --demo-max: 90rem;
@@ -338,8 +352,9 @@ select:focus-visible,
   font-family: var(--font-jetbrains), ui-monospace, monospace;
   font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--accent);
 }
 
 /* Serif-italic accent for emphasis phrases inside headlines. */
@@ -387,23 +402,23 @@ select:focus-visible,
 .display-xl {
   font-family: var(--font-bricolage), system-ui, sans-serif;
   /* Scale by the smaller of width/height so the hero always fits one screen. */
-  font-size: clamp(2.75rem, min(6.2vw, 8.6vh), 4.75rem);
-  line-height: 0.96;
+  font-size: clamp(2.4rem, min(4.6vw, 6.4vh), 3.75rem);
+  line-height: 1;
   font-weight: 800;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.034em;
 }
 
 .display-lg {
   font-family: var(--font-bricolage), system-ui, sans-serif;
-  font-size: clamp(1.95rem, 4.2vw, 3rem);
-  line-height: 1.04;
+  font-size: clamp(2.1rem, 4.6vw, 3.35rem);
+  line-height: 1.02;
   font-weight: 700;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.03em;
 }
 
 .display-md {
   font-family: var(--font-bricolage), system-ui, sans-serif;
-  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   line-height: 1.14;
   font-weight: 700;
   letter-spacing: -0.022em;
@@ -422,28 +437,21 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
-  background: linear-gradient(
-    135deg,
-    var(--trail-cyan),
-    color-mix(in oklab, var(--trail-cyan) 55%, var(--trail-purple))
-  );
-  padding: 0.875rem 1.75rem;
-  font-size: 0.8125rem;
+  background: var(--accent);
+  padding: 0.875rem 1.6rem;
+  font-size: 0.875rem;
   line-height: 1.25rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: #fff;
-  box-shadow: 0 4px 14px color-mix(in oklab, var(--trail-cyan) 35%, transparent);
+  box-shadow: var(--shadow-sm);
   transition:
-    transform 0.2s ease,
-    filter 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 .btn-trail-primary:hover {
-  transform: scale(1.02);
-  filter: brightness(1.06);
-  box-shadow: 0 6px 20px color-mix(in oklab, var(--trail-cyan) 42%, transparent);
+  background: var(--accent-strong);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-trail-secondary {
@@ -451,22 +459,22 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
-  border: none;
-  background: color-mix(in oklab, var(--trail-orange) 9%, var(--trail-bg-deep));
-  padding: 0.875rem 1.75rem;
+  border: 1px solid var(--border-hairline-strong);
+  background: transparent;
+  padding: calc(0.875rem - 1px) calc(1.6rem - 1px);
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 600;
   color: var(--trail-ink);
   transition:
-    color 0.2s ease,
-    background-color 0.2s ease,
-    transform 0.2s ease;
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease;
 }
 .btn-trail-secondary:hover {
-  color: var(--trail-orange);
-  background-color: color-mix(in oklab, var(--trail-orange) 14%, var(--trail-bg-deep));
-  transform: scale(1.02);
+  color: var(--accent);
+  border-color: var(--accent);
+  background-color: var(--accent-soft);
 }
 
 .btn-product-primary {
@@ -536,69 +544,129 @@ select:focus-visible,
   color: var(--trail-ink);
 }
 
+/* ── Unified card system — one surface, one edge, two elevations ── */
 .trail-card {
-  background: var(--trail-surface);
-  border: none;
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
   border-radius: var(--radius-card);
-  box-shadow: var(--trail-card-shadow);
+  box-shadow: var(--shadow-sm);
   transition:
-    transform 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 .trail-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 2px 4px rgba(31, 27, 22, 0.05),
-    0 12px 32px rgba(31, 27, 22, 0.08);
+  border-color: var(--border-hairline-strong);
+  box-shadow: var(--shadow-md);
 }
 
 .trail-card-strong {
-  background: var(--trail-surface-strong);
-  border: none;
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
   border-radius: var(--radius-card);
-  box-shadow: var(--trail-card-shadow);
+  box-shadow: var(--shadow-md);
 }
 
 .feature-card {
   position: relative;
-  overflow: hidden;
-  background: #fff;
-  border: none;
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
   border-radius: var(--radius-card);
-  box-shadow: var(--trail-card-shadow);
+  box-shadow: var(--shadow-sm);
   transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease;
-}
-.feature-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto auto 0;
-  height: 3px;
-  width: 100%;
-  background: var(--feature-accent, var(--trail-cyan));
-  opacity: 0.85;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .feature-card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 4px 12px rgba(31, 27, 22, 0.07),
-    0 16px 40px rgba(31, 27, 22, 0.09);
-}
-.feature-card:nth-child(3n + 1) {
-  --feature-accent: var(--trail-orange);
-}
-.feature-card:nth-child(3n + 2) {
-  --feature-accent: var(--trail-cyan);
-}
-.feature-card:nth-child(3n) {
-  --feature-accent: var(--trail-purple);
+  border-color: var(--border-hairline-strong);
+  box-shadow: var(--shadow-md);
 }
 
 .glass-pill {
-  background: color-mix(in oklab, var(--trail-bg) 72%, white);
+  background: color-mix(in oklab, var(--trail-bg) 70%, white);
   backdrop-filter: blur(14px);
-  border: none;
+  border: 1px solid var(--border-hairline);
+}
+
+/* ── Hero app-window mock — reads as a real product surface ── */
+.app-window {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-card-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Faint second panel peeking behind for depth. */
+.app-window-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: translate(18px, 22px) scale(0.97);
+  border-radius: var(--radius-card-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-md);
+  opacity: 0.55;
+}
+
+/* Soft wide accent glow grounding the window. */
+.app-window-glow {
+  position: absolute;
+  z-index: 0;
+  inset: auto 8% -8% 8%;
+  height: 42%;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--accent) 24%, transparent);
+  filter: blur(56px);
+  pointer-events: none;
+}
+
+.app-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 0.6rem 0.85rem;
+}
+.app-dot {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--trail-ink) 18%, transparent);
+}
+
+/* Slim left icon rail. */
+.app-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  border-right: 1px solid var(--border-hairline);
+  background: color-mix(in oklab, var(--trail-ink) 2%, var(--surface-card));
+  padding: 0.85rem 0.6rem;
+}
+.app-rail-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--trail-ink) 8%, transparent);
+}
+.app-rail-icon.is-active {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+/* Chart bars + baseline inside the window. */
+.app-bar {
+  flex: 1 1 0%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--accent) 40%, white),
+    var(--accent)
+  );
 }
 
 .halftone {
@@ -632,70 +700,33 @@ select:focus-visible,
   mask-image: linear-gradient(to top, black 10%, transparent 88%);
 }
 
-.section-wash-orange {
-  background: radial-gradient(
-    ellipse 85% 65% at 18% 0%,
-    color-mix(in oklab, var(--trail-orange) 18%, transparent),
-    transparent 72%
-  );
-}
-
-.section-wash-purple {
-  background: radial-gradient(
-    ellipse 75% 60% at 82% 18%,
-    color-mix(in oklab, var(--trail-purple) 16%, transparent),
-    transparent 72%
-  );
-}
-
-.section-wash-cyan {
-  background: radial-gradient(
-    ellipse 70% 55% at 50% 48%,
-    color-mix(in oklab, var(--trail-cyan) 14%, transparent),
-    transparent 72%
-  );
-}
-
-.section-wash-green {
-  background: radial-gradient(
-    ellipse 72% 58% at 22% 88%,
-    color-mix(in oklab, var(--trail-green) 14%, transparent),
-    transparent 74%
-  );
-}
-
+/* ── Accent washes — single hue, very subtle (opt-in) ── */
+.section-wash-orange,
+.section-wash-purple,
+.section-wash-cyan,
+.section-wash-green,
 .section-wash-warm {
-  background:
-    radial-gradient(
-      ellipse 55% 45% at 12% 20%,
-      color-mix(in oklab, var(--trail-cream) 16%, transparent),
-      transparent 68%
-    ),
-    radial-gradient(
-      ellipse 50% 40% at 88% 75%,
-      color-mix(in oklab, var(--trail-orange) 12%, transparent),
-      transparent 65%
-    );
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    color-mix(in oklab, var(--accent) 6%, transparent),
+    transparent 70%
+  );
 }
 
-/* Ambient color pools — soft depth without borders. */
+/* Ambient pools — single accent, low intensity. */
 .section-ambient {
   pointer-events: none;
   position: absolute;
   border-radius: 999px;
-  filter: blur(64px);
+  filter: blur(80px);
 }
-.section-ambient-orange {
-  background: color-mix(in oklab, var(--trail-orange) 22%, transparent);
-}
-.section-ambient-cyan {
-  background: color-mix(in oklab, var(--trail-cyan) 18%, transparent);
-}
+.section-ambient-orange,
+.section-ambient-cyan,
 .section-ambient-purple {
-  background: color-mix(in oklab, var(--trail-purple) 16%, transparent);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
 }
 
-/* ── Section surface tints — flat bases; accent washes are opt-in per section ── */
+/* ── Section surface tints — flat neutral bases ── */
 .section-tint-cream {
   background: var(--trail-bg);
   color: var(--trail-ink);
@@ -712,7 +743,7 @@ select:focus-visible,
 }
 
 .section-tint-sky {
-  background: color-mix(in oklab, var(--trail-cyan) 5%, var(--trail-bg));
+  background: var(--surface-card);
   color: var(--trail-ink);
 }
 
@@ -722,83 +753,179 @@ select:focus-visible,
 }
 
 .section-tint-white {
-  background: var(--trail-surface);
+  background: var(--surface-card);
   color: var(--trail-ink);
 }
 
-/* ── Modern SaaS surfaces (mesh + rhythm, not flat monotone) ── */
+/* ── Restrained surface rhythm: white <-> light neutral; one faint accent
+   glow allowed in the hero / CTA bookends only. ── */
 .section-surface-hero {
   background:
-    radial-gradient(ellipse 100% 80% at 0% -20%, color-mix(in oklab, var(--trail-orange) 16%, transparent), transparent 52%),
-    radial-gradient(ellipse 75% 55% at 100% 5%, color-mix(in oklab, var(--trail-cyan) 14%, transparent), transparent 48%),
-    radial-gradient(ellipse 55% 45% at 50% 100%, color-mix(in oklab, var(--trail-purple) 10%, transparent), transparent 55%),
+    radial-gradient(
+      ellipse 55% 48% at 88% -8%,
+      color-mix(in oklab, var(--accent) 9%, transparent),
+      transparent 60%
+    ),
     var(--trail-bg);
   color: var(--trail-ink);
 }
 
 .section-surface-alt {
-  background:
-    radial-gradient(ellipse 70% 50% at 100% 0%, color-mix(in oklab, var(--trail-cyan) 8%, transparent), transparent 58%),
-    radial-gradient(ellipse 50% 40% at 0% 100%, color-mix(in oklab, var(--trail-purple) 6%, transparent), transparent 55%),
-    #fff;
+  background: var(--surface-card);
   color: var(--trail-ink);
 }
 
 .section-surface-warm {
-  background:
-    radial-gradient(ellipse 80% 55% at 0% 100%, color-mix(in oklab, var(--trail-orange) 11%, transparent), transparent 58%),
-    radial-gradient(ellipse 60% 45% at 100% 0%, color-mix(in oklab, var(--trail-cyan) 7%, transparent), transparent 52%),
-    var(--trail-bg-deep);
+  background: var(--trail-bg-deep);
   color: var(--trail-ink);
 }
 
 .section-surface-cta {
   background:
-    radial-gradient(ellipse 90% 70% at 50% 100%, color-mix(in oklab, var(--trail-orange) 18%, transparent), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 0% 50%, color-mix(in oklab, var(--trail-cyan) 10%, transparent), transparent 55%),
+    radial-gradient(
+      ellipse 70% 60% at 50% 118%,
+      color-mix(in oklab, var(--accent) 10%, transparent),
+      transparent 62%
+    ),
     var(--trail-bg);
   color: var(--trail-ink);
 }
 
+/* ── Single dark contrast band (stats) — neutral ink, not rainbow ── */
 .section-band-metrics {
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--trail-cyan) 92%, #0c4a6e) 0%,
-    color-mix(in oklab, var(--trail-purple) 82%, #312e81) 50%,
-    color-mix(in oklab, var(--trail-orange) 78%, #7c2d12) 100%
-  );
-  color: #f8fafc;
+  background: #16130f;
+  color: #f6f3ee;
 }
 
 .section-band-metrics .text-trail-ink,
 .section-band-metrics h2,
 .section-band-metrics h3 {
-  color: #f8fafc;
+  color: #f6f3ee;
 }
 .section-band-metrics .text-trail-muted,
 .section-band-metrics .lead {
-  color: rgba(248, 250, 252, 0.76);
+  color: rgba(246, 243, 238, 0.7);
 }
 .section-band-metrics .text-trail-faint {
-  color: rgba(248, 250, 252, 0.48);
+  color: rgba(246, 243, 238, 0.42);
 }
 .section-band-metrics .eyebrow {
-  color: #67e8f9;
+  color: color-mix(in oklab, var(--accent) 50%, white);
 }
 
 .stat-card-glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-card);
 }
 
 .saas-grid {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--trail-ink) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--trail-ink) 7%, transparent) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 35%, black 12%, transparent 72%);
+    linear-gradient(to right, color-mix(in oklab, var(--trail-ink) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--trail-ink) 9%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 110% 95% at 70% 12%, black 35%, transparent 82%);
+  mask-image: radial-gradient(ellipse 110% 95% at 70% 12%, black 35%, transparent 82%);
+}
+
+/* ── Full-height "story" sections ──
+   min-height (never fixed height) so short content fills the viewport and
+   is centered, while tall content can still grow and scroll instead of
+   clipping. Smaller sections opt out and use their natural height. */
+.section-fill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* ── Problem section: orbiting "solar system" of disconnected tools ──
+   Category icons revolve around the central KennelEyes mark. Software-agnostic
+   (no brand logos). Respects reduced-motion. ── */
+.solar {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+.solar-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  height: clamp(78px, 19%, 110px);
+  width: clamp(78px, 19%, 110px);
+  border-radius: 999px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-lg);
+}
+.solar-core::before {
+  content: "";
+  position: absolute;
+  inset: -32%;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent) 28%, transparent),
+    transparent 68%
+  );
+  filter: blur(16px);
+}
+.solar-orbit {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px dashed var(--border-hairline-strong);
+  animation: solar-spin var(--orbit-dur, 32s) linear infinite;
+}
+.solar-orbit[data-dir="rev"] {
+  animation-name: solar-spin-rev;
+}
+.solar-planet {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+.solar-planet[data-pos="bottom"] {
+  top: auto;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+}
+/* Counter-rotate so the icon + label stay upright as the orbit spins.
+   --orbit-dur inherits from the parent .solar-orbit. */
+.solar-upright {
+  animation: solar-spin-rev var(--orbit-dur, 32s) linear infinite;
+}
+.solar-orbit[data-dir="rev"] .solar-upright {
+  animation-name: solar-spin;
+}
+@keyframes solar-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes solar-spin-rev {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .solar-orbit,
+  .solar-upright {
+    animation: none !important;
+  }
 }
 
 .section-accent-top::before {
@@ -1194,8 +1321,9 @@ body.demo-active .demo-nav-scrim {
   z-index: 1;
   min-height: min(460px, 58vh);
   border-radius: var(--radius-card);
-  background: #fff;
-  box-shadow: var(--trail-card-shadow);
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 
@@ -1203,9 +1331,9 @@ body.demo-active .demo-nav-scrim {
   position: relative;
   backface-visibility: hidden;
   border-radius: var(--radius-card);
-  background: #fff;
-  border: none;
-  box-shadow: var(--trail-card-shadow);
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-sm);
 }
 
 .how-panel-swap {

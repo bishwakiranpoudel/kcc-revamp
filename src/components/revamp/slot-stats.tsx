@@ -13,10 +13,10 @@ export function SlotStats() {
     <section className="section-band-metrics relative overflow-hidden py-[var(--section-py)]">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 20% 50%, rgba(255,255,255,0.15), transparent 60%), radial-gradient(ellipse 50% 45% at 80% 40%, rgba(255,255,255,0.1), transparent 55%)",
+            "radial-gradient(ellipse 60% 55% at 50% -10%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 62%)",
         }}
       />
       <PageContainer className="relative z-10 text-center">
@@ -33,14 +33,20 @@ export function SlotStats() {
           stagger
           staggerEach={0.08}
           delay={0.08}
-          className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-4 sm:mt-12 sm:grid-cols-4"
+          className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] bg-white/[0.08] sm:mt-12 sm:grid-cols-4"
         >
           {stats.map((s) => (
-            <div key={s.value} className="stat-card-glass rounded-xl px-4 py-6">
-              <span className="font-display block text-3xl font-extrabold tabular text-[#a5f3fc] sm:text-4xl">
+            <div
+              key={s.value}
+              className="flex flex-col items-center bg-[#16130f] px-4 py-8"
+            >
+              <span
+                className="font-display text-3xl font-extrabold tabular sm:text-4xl"
+                style={{ color: "color-mix(in oklab, var(--accent) 42%, white)" }}
+              >
                 {s.value}
               </span>
-              <p className="mt-2 text-sm leading-relaxed text-white/75">
+              <p className="mt-2 text-sm leading-relaxed text-white/65">
                 {s.label}
               </p>
             </div>
@@ -48,7 +54,7 @@ export function SlotStats() {
         </Reveal>
 
         <Reveal delay={0.2}>
-          <p className="mt-8 text-xs text-white/45">
+          <p className="mt-8 text-xs text-white/40">
             Illustrative figures shown for demonstration during early access.
           </p>
         </Reveal>

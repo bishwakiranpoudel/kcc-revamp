@@ -44,24 +44,28 @@ const channels = [
 
 export default function ContactPage() {
   return (
-    <section className="demo-zone relative min-h-svh overflow-hidden pt-[calc(var(--header-h)+2.5rem)] pb-20">
-      <div className="page-container">
+    <section className="trail-section relative min-h-svh overflow-hidden pt-[calc(var(--header-h)+2.5rem)] pb-20">
+      <div
+        aria-hidden
+        className="section-ambient section-ambient-cyan pointer-events-none absolute -right-20 top-[10%] z-0 size-72 opacity-30"
+      />
+      <div className="page-container relative z-10">
         <Reveal className="max-w-2xl">
           <Link
             href="/"
-            className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+            className="text-sm font-medium text-trail-muted transition-colors hover:text-trail-ink"
           >
             ← Back to home
           </Link>
-          <span className="eyebrow mt-6 flex w-fit items-center gap-2 text-data-scheduled">
+          <span className="eyebrow mt-6 flex w-fit items-center gap-2 text-trail-cyan">
             <span className="size-1.5 rounded-full bg-current" />
             Contact us
           </span>
-          <h1 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-[2.7rem]">
+          <h1 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-tight text-trail-ink sm:text-4xl lg:text-[2.7rem]">
             Let&apos;s talk about your{" "}
-            <span className="text-signal-strong">whole group</span>
+            <span className="text-trail-cyan">whole group</span>
           </h1>
-          <p className="mt-4 max-w-xl text-pretty text-base leading-relaxed text-ink-muted lg:text-lg">
+          <p className="mt-4 max-w-xl text-pretty text-base leading-relaxed text-trail-muted lg:text-lg">
             Questions about pricing, a demo, or how KennelEyes fits your stack?
             Send us a note and a real person — not a bot — gets back to you within
             one business day.
@@ -74,58 +78,58 @@ export default function ContactPage() {
               <Link
                 key={item.title}
                 href={item.href}
-                className="soft-card group flex items-center gap-4 rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-signal-strong/30"
+                className="trail-card group flex items-center gap-4 rounded-2xl p-4 transition-transform hover:-translate-y-0.5"
               >
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-signal-strong/12 text-signal-strong">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-trail-cyan/10 text-trail-cyan">
                   <item.icon size={22} weight="duotone" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold tracking-tight text-ink">
+                  <span className="block text-sm font-semibold tracking-tight text-trail-ink">
                     {item.title}
                   </span>
-                  <span className="block truncate text-sm font-medium text-signal-deep">
+                  <span className="block truncate text-sm font-medium text-trail-cyan">
                     {item.value}
                   </span>
-                  <span className="block text-xs text-ink-muted">{item.note}</span>
+                  <span className="block text-xs text-trail-muted">{item.note}</span>
                 </span>
                 <ArrowUpRight
                   size={18}
                   weight="bold"
-                  className="shrink-0 text-ink-muted transition-colors group-hover:text-signal-strong"
+                  className="shrink-0 text-trail-muted transition-colors group-hover:text-trail-cyan"
                 />
               </Link>
             ))}
 
-            <div className="soft-card rounded-2xl p-5">
+            <div className="trail-card rounded-2xl p-5">
               <div className="flex items-center gap-4">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-data-revenue/12 text-data-revenue">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-trail-green/12 text-trail-green">
                   <Clock size={22} weight="duotone" />
                 </span>
                 <div>
-                  <h3 className="text-sm font-semibold tracking-tight text-ink">
+                  <h3 className="text-sm font-semibold tracking-tight text-trail-ink">
                     One business day, every time
                   </h3>
-                  <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
+                  <p className="mt-0.5 text-xs leading-relaxed text-trail-muted">
                     No ticket queues — your message reaches the team directly.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-2 border-t border-line pt-4 text-xs text-ink-muted">
+              <div className="mt-4 flex items-center gap-2 border-t border-trail-border pt-4 text-xs text-trail-muted">
                 <ShieldCheck
                   size={16}
                   weight="duotone"
-                  className="shrink-0 text-data-scheduled"
+                  className="shrink-0 text-trail-cyan"
                 />
                 Read-only, encrypted — we never sell or share your numbers.
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-4">
-                <span className="eyebrow text-ink-muted">Works with</span>
+              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-trail-border pt-4">
+                <span className="eyebrow text-trail-muted">Works with</span>
                 {INTEGRATIONS.map((name) => (
                   <span
                     key={name}
-                    className="rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs font-semibold text-ink"
+                    className="rounded-full border border-trail-border bg-white px-2.5 py-0.5 text-xs font-semibold text-trail-ink"
                   >
                     {name}
                   </span>
@@ -133,11 +137,11 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <p className="px-1 text-sm text-ink-muted">
+            <p className="px-1 text-sm text-trail-muted">
               Already a customer?{" "}
               <Link
                 href={APP_URL}
-                className="font-semibold text-signal-deep hover:underline"
+                className="font-semibold text-trail-cyan hover:underline"
               >
                 Log in to your workspace
               </Link>

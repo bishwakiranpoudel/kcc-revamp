@@ -42,7 +42,7 @@ export function IntegrationsStrip() {
   return (
     <section
       id="integrations"
-      className="section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden"
+      className="section-fill section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div className="stack-grid absolute inset-0 opacity-40" />
@@ -50,7 +50,7 @@ export function IntegrationsStrip() {
 
       <PageContainer className="relative grid items-center gap-10 py-12 lg:min-h-[520px] lg:grid-cols-[0.95fr_1.05fr] lg:gap-14 lg:py-16">
         <Reveal className="relative z-10 text-center lg:py-16 lg:text-left xl:py-20">
-          <p className="eyebrow text-trail-orange">{SOFTWARE_COPY.stackEyebrow}</p>
+          <p className="eyebrow text-trail-cyan">{SOFTWARE_COPY.stackEyebrow}</p>
           <h2 className="display-md mt-3 text-trail-ink">
             {SOFTWARE_COPY.stackHeadline}
           </h2>

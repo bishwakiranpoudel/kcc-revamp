@@ -32,7 +32,7 @@ export function ProductFeatures() {
   return (
     <section
       id="features"
-      className="section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
+      className="section-fill section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
     >
       <PageContainer className="relative z-10">
         <Reveal>
@@ -52,7 +52,7 @@ export function ProductFeatures() {
         >
           {features.map((feature, i) => (
             <article key={feature.title} className="feature-card p-5 sm:p-6">
-                <span className="font-mono text-[0.6875rem] text-trail-orange">
+                <span className="font-mono text-[0.6875rem] text-trail-cyan">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="heading-card mt-2 text-trail-ink">

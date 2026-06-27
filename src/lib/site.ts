@@ -58,5 +58,5 @@ export const SOFTWARE_COPY = {
     "KennelEyes reads your kennel software, scheduling and time clock software, and financial software, with read-only access. Watch your tools connect to one live dashboard.",
   heroAudience: "For individual kennels and multi-location groups",
   heroLead:
-    "You're running separate kennel software, scheduling software, and financial software — then piecing the numbers together in multiple spreadsheets. KennelEyes brings together revenue, payroll, and financial data into one place, and presents the most relevant analysis so you can make better decisions.",
+    "You're running separate kennel, scheduling, and financial software — then piecing the numbers together in spreadsheets. KennelEyes brings revenue, payroll, and financial data into one place so you can make better decisions.",
 } as const;

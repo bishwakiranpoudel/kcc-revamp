@@ -21,13 +21,13 @@ export function FinalCta() {
         />
       </div>
 
-      <div className="section-wash-orange pointer-events-none absolute inset-0 z-0 opacity-35" />
+      <div className="section-wash-cyan pointer-events-none absolute inset-0 z-0 opacity-60" />
       <PageContainer className="relative z-10 text-center">
         <Reveal y={28}>
-          <p className="eyebrow text-trail-orange">Get started</p>
+          <p className="eyebrow text-trail-cyan">Get started</p>
           <h2 className="display-lg mx-auto mt-4 max-w-3xl">
             See your real numbers{" "}
-            <span className="text-emph text-trail-orange">this week</span>
+            <span className="text-emph text-trail-cyan">this week</span>
           </h2>
           <p className="lead mx-auto mt-5 max-w-lg text-trail-muted">
             Book a 30-minute demo. We&apos;ll connect your kennel, scheduling, and

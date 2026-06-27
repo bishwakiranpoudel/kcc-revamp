@@ -41,86 +41,98 @@ export function SiteHeader() {
     };
   }, []);
 
-  return (
-    <header
-      className={`fixed inset-x-0 z-50 flex justify-center px-[var(--page-px)] transition-all duration-300 ${
-        scrolled ? "top-3" : "top-4 sm:top-5"
-      }`}
-    >
-      <div
-        className={`flex w-full max-w-[var(--page-max)] items-center justify-between rounded-full px-4 py-2.5 transition-colors sm:px-5 sm:py-3 ${
-          onDemo || scrolled
-            ? "bg-surface/95 backdrop-blur-md"
-            : "glass-pill"
-        }`}
-      >
-        <Link href="/" aria-label="KennelEyes home" className="flex items-center gap-2">
-          <Image
-            src="/logo/logo_eye.png"
-            alt=""
-            width={48}
-            height={27}
-            priority
-            className="h-7 w-auto"
-          />
-          <span
-            className={`font-display text-lg font-extrabold tracking-tight ${
-              onDemo ? "text-ink" : "text-trail-ink"
-            }`}
-          >
-            Kennel<span className="text-trail-cyan">Eyes</span>
-          </span>
-        </Link>
+  // Top of the hero = normal full-width navbar; once scrolled (or over the
+  // demo zone) it condenses into a floating bar with a medium radius.
+  const floating = scrolled || onDemo;
 
-        <nav className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`text-sm transition-colors ${
-                onDemo
-                  ? "text-ink-muted hover:text-ink"
-                  : "text-trail-muted hover:text-trail-ink"
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+  const inner = (
+    <>
+      <Link href="/" aria-label="KennelEyes home" className="flex items-center gap-2">
+        <Image
+          src="/logo/logo_eye.png"
+          alt=""
+          width={48}
+          height={27}
+          priority
+          className="h-7 w-auto"
+        />
+        <span
+          className={`font-display text-lg font-extrabold tracking-tight ${
+            onDemo ? "text-ink" : "text-trail-ink"
+          }`}
+        >
+          Kennel<span className="text-trail-cyan">Eyes</span>
+        </span>
+      </Link>
 
-        <div className="hidden items-center gap-3 md:flex">
+      <nav className="hidden items-center gap-6 md:flex">
+        {NAV_LINKS.map((l) => (
           <Link
-            href={APP_URL}
+            key={l.href}
+            href={l.href}
             className={`text-sm transition-colors ${
               onDemo
                 ? "text-ink-muted hover:text-ink"
                 : "text-trail-muted hover:text-trail-ink"
             }`}
           >
-            Log in
+            {l.label}
           </Link>
-          <Link
-            href="/demo"
-            className={`rounded-full px-5 py-2 text-sm font-bold transition-transform hover:scale-105 ${
-              onDemo
-                ? "bg-signal-strong text-white"
-                : "bg-trail-cyan text-white"
-            }`}
-          >
-            Book a demo
-          </Link>
-        </div>
+        ))}
+      </nav>
 
-        <button
-          type="button"
-          aria-label="Menu"
-          className="flex flex-col gap-1.5 md:hidden"
-          onClick={() => setOpen((v) => !v)}
+      <div className="hidden items-center gap-3 md:flex">
+        <Link
+          href={APP_URL}
+          className={`text-sm transition-colors ${
+            onDemo
+              ? "text-ink-muted hover:text-ink"
+              : "text-trail-muted hover:text-trail-ink"
+          }`}
         >
-          <span className={`h-0.5 w-6 ${onDemo ? "bg-ink" : "bg-trail-ink"}`} />
-          <span className={`h-0.5 w-4 ${onDemo ? "bg-ink" : "bg-trail-ink"}`} />
-        </button>
+          Log in
+        </Link>
+        <Link
+          href="/demo"
+          className={`rounded-md px-5 py-2 text-sm font-bold transition-colors ${
+            onDemo
+              ? "bg-signal-strong text-white hover:brightness-110"
+              : "bg-trail-cyan text-white hover:bg-[color:var(--accent-strong)]"
+          }`}
+        >
+          Book a demo
+        </Link>
       </div>
+
+      <button
+        type="button"
+        aria-label="Menu"
+        className="flex flex-col gap-1.5 md:hidden"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className={`h-0.5 w-6 ${onDemo ? "bg-ink" : "bg-trail-ink"}`} />
+        <span className={`h-0.5 w-4 ${onDemo ? "bg-ink" : "bg-trail-ink"}`} />
+      </button>
+    </>
+  );
+
+  return (
+    <header
+      className={`fixed inset-x-0 z-50 transition-all duration-300 ${
+        floating ? "top-3 px-[var(--page-px)]" : "top-0"
+      }`}
+    >
+      {floating ? (
+        <div className="mx-auto flex w-full max-w-[var(--page-max)] items-center justify-between rounded-md bg-surface/95 px-4 py-2.5 shadow-[var(--shadow-md)] backdrop-blur-md sm:px-5 sm:py-3">
+          {inner}
+        </div>
+      ) : (
+        <div className="w-full border-b border-[color:var(--border-hairline)] bg-surface">
+          <div className="mx-auto flex w-full max-w-[var(--page-max)] items-center justify-between px-[var(--page-px)] py-3.5">
+            {inner}
+          </div>
+        </div>
+      )}
 
       {open && (
         <div

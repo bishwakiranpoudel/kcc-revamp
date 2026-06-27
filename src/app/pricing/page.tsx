@@ -120,7 +120,7 @@ export default function PricingPage() {
               title={
                 <>
                   One clear price,{" "}
-                  <span className="text-emph text-trail-orange">per location</span>
+                  <span className="text-emph text-trail-cyan">per location</span>
                 </>
               }
               description="From $149/mo per location, with volume discounts for multi-site groups. No setup fees, no add-ons — just every location on one screen."

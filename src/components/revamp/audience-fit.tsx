@@ -18,7 +18,7 @@ export function AudienceFit() {
   return (
     <section
       id="audience"
-      className="section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
+      className="section-fill section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
     >
       <PageContainer className="relative z-10">
         <Reveal>

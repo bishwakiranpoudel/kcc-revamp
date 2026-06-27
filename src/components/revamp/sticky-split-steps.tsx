@@ -39,8 +39,8 @@ function StepVisual({ visual }: { visual: (typeof steps)[number]["visual"] }) {
   if (visual === "orbit") {
     return (
       <div className="relative mx-auto size-52 sm:size-60">
-        <div className="how-orbit-ring absolute inset-0 rounded-full border border-dashed border-trail-cyan/35" />
-        <div className="how-orbit-ring absolute inset-[14%] rounded-full border border-dashed border-trail-orange/25" />
+        <div className="how-orbit-ring absolute inset-0 rounded-full border border-dashed border-trail-cyan/30" />
+        <div className="how-orbit-ring absolute inset-[14%] rounded-full border border-dashed border-[color:var(--border-hairline-strong)]" />
         <div className="absolute left-1/2 top-1/2 flex size-[34%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-trail-surface-strong shadow-[0_8px_30px_-8px_rgba(14,116,144,0.35)]">
           <Image
             src="/logo/logo_eye.png"
@@ -93,7 +93,7 @@ function StepVisual({ visual }: { visual: (typeof steps)[number]["visual"] }) {
 
   return (
     <div className="relative mx-auto flex size-44 items-center justify-center sm:size-48">
-      <div className="how-pulse-ring absolute inset-0 rounded-full border border-trail-orange/35" />
+      <div className="how-pulse-ring absolute inset-0 rounded-full border border-[color:var(--border-hairline-strong)]" />
       <div className="how-pulse-ring absolute inset-[12%] rounded-full border border-trail-cyan/30" />
       <div className="how-pulse-core absolute inset-[24%] animate-pulse rounded-full bg-trail-cyan/15" />
       <div className="relative flex flex-col items-center">
@@ -140,7 +140,7 @@ export function StickySplitSteps() {
   const railFill = steps.length > 1 ? (active / (steps.length - 1)) * 100 : 100;
 
   return (
-    <section id="how" className="section-surface-warm relative overflow-hidden py-[var(--section-py)]">
+    <section id="how" className="section-fill section-surface-warm relative overflow-hidden py-[var(--section-py)]">
       <PageContainer className="relative z-10 lg:grid lg:items-start lg:gap-16 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="lg:sticky lg:top-[calc(var(--header-h)+1rem)] lg:self-start">
           <Reveal>
