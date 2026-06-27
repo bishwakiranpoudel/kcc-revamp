@@ -33,7 +33,7 @@ function Tip({
   const row = payload[0]?.payload;
   if (!row) return null;
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs">
       <p className="mb-1 font-mono text-[10px] text-ink-muted">{label}</p>
       <p className="flex items-center justify-between gap-4">
         <span className="text-ink-muted">Dogs</span>
@@ -94,7 +94,7 @@ export function LaborComposedChart({
               onClick={() => setMode(t.key)}
               className={`rounded-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-colors ${
                 mode === t.key
-                  ? "bg-surface text-ink shadow-sm"
+                  ? "bg-surface text-ink"
                   : "text-ink-muted hover:text-ink"
               }`}
             >

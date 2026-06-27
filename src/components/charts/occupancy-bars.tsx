@@ -26,7 +26,7 @@ function ChartTooltip({
   if (!row) return null;
   const pct = Math.round((row.used / row.capacity) * 100);
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs">
       <p className="mb-1 font-mono text-[10px] text-ink-muted/70">{label}</p>
       <p className="flex items-center justify-between gap-4">
         <span className="text-ink-muted">In-house</span>

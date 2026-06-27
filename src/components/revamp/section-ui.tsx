@@ -19,7 +19,7 @@ export function BrandLogo({
   if (!src) return null;
   return (
     <span
-      className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm ${className}`.trim()}
+      className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white ${className}`.trim()}
       style={{ width: size, height: size }}
     >
       <Image

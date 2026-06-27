@@ -1,152 +1,50 @@
-"use client";
-
-import { useCallback, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import Link from "next/link";
 import { PageContainer } from "@/components/revamp/section-ui";
-import { SummitMountain } from "@/components/revamp/trail-art";
-import { refreshScrollTriggers } from "@/lib/scroll";
-
-gsap.registerPlugin(ScrollTrigger);
+import { Reveal } from "@/components/revamp/reveal";
 
 export function SummitPortal() {
-  const pinRef = useRef<HTMLDivElement>(null);
-  const tunnelRef = useRef<HTMLDivElement>(null);
-  const mountainRef = useRef<HTMLDivElement>(null);
-  const portalRef = useRef<HTMLDivElement>(null);
-  const copyRef = useRef<HTMLDivElement>(null);
-
-  const onMountainReady = useCallback(() => {
-    refreshScrollTriggers();
-  }, []);
-
-  useIsomorphicLayoutEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || !pinRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.set(
-        [tunnelRef.current, mountainRef.current, portalRef.current],
-        { force3D: true },
-      );
-
-      const buildTimeline = (end: string) => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: pinRef.current,
-            start: "top top",
-            end,
-            pin: true,
-            scrub: 0.8,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        tl.fromTo(
-          tunnelRef.current,
-          { rotateX: 10, scale: 1.12, transformPerspective: 900 },
-          { rotateX: 0, scale: 1, ease: "none", duration: 0.6 },
-          0,
-        )
-          .fromTo(
-            mountainRef.current,
-            { yPercent: 28, scale: 1.25, opacity: 0.12 },
-            { yPercent: 0, scale: 1, opacity: 1, ease: "none", duration: 0.6 },
-            0,
-          )
-          .fromTo(
-            copyRef.current,
-            { y: 36, opacity: 0 },
-            { y: 0, opacity: 1, ease: "power1.out", duration: 0.3 },
-            0.14,
-          )
-          .fromTo(
-            portalRef.current,
-            { clipPath: "circle(0% at 50% 58%)", opacity: 0 },
-            {
-              clipPath: "circle(145% at 50% 58%)",
-              opacity: 1,
-              ease: "none",
-              duration: 0.38,
-            },
-            0.62,
-          );
-      };
-
-      ScrollTrigger.matchMedia({
-        "(min-width: 768px)": () => buildTimeline("+=220%"),
-        "(max-width: 767px)": () => buildTimeline("+=140%"),
-      });
-    }, pinRef);
-
-    return () => {
-      ctx.revert();
-      // ScrollTrigger.matchMedia pins aren't captured by the context, so revert
-      // them explicitly — otherwise the pin-spacer wrapper leaks and React
-      // throws removeChild when this section unmounts during navigation.
-      ScrollTrigger.clearMatchMedia();
-    };
-  }, []);
-
   return (
-    <div
+    <section
       id="summit"
-      ref={pinRef}
-      className="trail-dark relative min-h-[min(100svh,680px)] overflow-hidden bg-trail-bg-deep text-trail-ink md:min-h-screen"
-      style={{ perspective: "900px" }}
+      className="section-tint-white relative overflow-hidden py-[var(--section-py)]"
     >
-      <div
-        ref={tunnelRef}
-        className="absolute inset-0 z-0 will-change-transform"
-        style={{ transformStyle: "preserve-3d" }}
-      >
-        <div
-          ref={mountainRef}
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center will-change-transform"
-        >
-          <SummitMountain onReady={onMountainReady} />
-        </div>
-      </div>
+      <PageContainer className="relative z-10">
+        <Reveal y={28}>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow text-trail-orange">Mission Control</p>
+            <p className="font-serif mt-3 text-xl italic text-trail-muted sm:text-2xl">
+              Analyze Your Numbers &amp; Make Consequential Decisions
+            </p>
+            <h2 className="display-lg mt-4 text-trail-ink">
+              This is the screen you&apos;d open{" "}
+              <span className="text-emph text-trail-cyan">every morning</span>
+            </h2>
+            <p className="lead mx-auto mt-5 max-w-lg text-trail-muted">
+              Revenue by service line, payroll as a % of revenue, occupancy by
+              site, and QuickBooks P&L — one dashboard, every location, live.
+            </p>
+            <Link href="#demo" className="btn-trail-primary mt-8 inline-flex">
+              See the live dashboard
+            </Link>
+          </div>
+        </Reveal>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-20"
-        style={{
-          background:
-            "radial-gradient(ellipse 65% 50% at 50% 36%, rgba(3,7,18,0.92), rgba(3,7,18,0.6) 50%, transparent 78%)",
-        }}
-      />
-
-      <PageContainer className="relative z-30 pt-[calc(var(--header-h)+1rem)]">
-        <div
-          ref={copyRef}
-          className="mx-auto max-w-2xl text-center will-change-transform [text-shadow:0_2px_18px_rgba(3,7,18,0.85)]"
-        >
-          <p className="eyebrow text-trail-cream">Mission Control</p>
-          <p className="font-serif mt-3 text-xl italic text-trail-cream/90 sm:text-2xl">
-            Analyze Your Numbers &amp; Make Consequential Decisions
-          </p>
-          <h2 className="display-lg mt-4">
-            This is the screen you&apos;d open{" "}
-            <span className="text-emph text-trail-cyan">every morning</span>
-          </h2>
-          <p className="lead mx-auto mt-5 max-w-lg text-trail-cream/85">
-            Revenue by service line, payroll as a % of revenue, occupancy by
-            site, and QuickBooks P&L — one dashboard, every location, live.
-          </p>
-        </div>
+        <Reveal delay={0.12} y={32} className="relative mx-auto mt-14 max-w-4xl">
+          <div className="pointer-events-none absolute inset-x-[8%] bottom-0 top-1/4 rounded-full bg-trail-orange/12 blur-3xl" />
+          <Image
+            src="/graphics/dog-summit.png"
+            alt=""
+            width={1600}
+            height={1067}
+            className="relative w-full rounded-2xl object-contain object-bottom opacity-90"
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, black 18%, black 88%, transparent 100%)",
+            }}
+          />
+        </Reveal>
       </PageContainer>
-
-      <div
-        ref={portalRef}
-        className="pointer-events-none absolute inset-0 z-40 will-change-[clip-path,opacity]"
-        style={{
-          background:
-            "linear-gradient(180deg, var(--trail-portal-from), var(--trail-portal-mid) 40%, var(--trail-portal-to))",
-          clipPath: "circle(0% at 50% 58%)",
-        }}
-      />
-    </div>
+    </section>
   );
 }

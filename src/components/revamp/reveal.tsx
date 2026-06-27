@@ -1,97 +1,130 @@
 "use client";
 
-import { useRef, type ElementType, type ReactNode } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type ReactNode,
+} from "react";
 import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type RevealProps = {
   children: ReactNode;
-  /** Element/tag to render. Defaults to a div. */
   as?: ElementType;
   className?: string;
-  /** Vertical travel distance in px. */
   y?: number;
-  /** Animate direct children in sequence instead of the wrapper as one block. */
   stagger?: boolean;
-  /** Per-child stagger (seconds) when `stagger` is set. */
   staggerEach?: number;
-  /** Initial delay before the reveal starts (seconds). */
   delay?: number;
-  /** Viewport start position for the ScrollTrigger. */
+  /** Play on mount for above-the-fold content. */
+  immediate?: boolean;
   start?: string;
 };
 
-/**
- * Lightweight scroll-reveal: fades + lifts its content into place when it
- * scrolls into view. Runs in a layout effect so the from-state is set before
- * paint (no flash), reverts cleanly on unmount, and respects reduced motion.
- */
+function isInViewport(el: HTMLElement) {
+  const rect = el.getBoundingClientRect();
+  return rect.top < window.innerHeight * 0.94 && rect.bottom > 0;
+}
+
+/** One-time fade-up when the block first enters the viewport (or on mount). */
 export function Reveal({
   children,
   as,
-  className,
+  className = "",
   y = 24,
   stagger = false,
-  staggerEach = 0.12,
+  staggerEach = 0.1,
   delay = 0,
-  start = "top 85%",
+  immediate = false,
 }: RevealProps) {
   const Tag = (as ?? "div") as ElementType;
   const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const targets =
-      stagger && el.children.length ? Array.from(el.children) : el;
-
     if (reduced) {
-      gsap.set(targets, { opacity: 1, y: 0 });
+      setVisible(true);
       return;
     }
 
-    const ctx = gsap.context(() => {
-      // If the element is already in (or above) the viewport on mount, play
-      // immediately instead of attaching a ScrollTrigger. Otherwise above-the-fold
-      // content can stay stuck at opacity:0 until the user happens to scroll.
-      const rect = el.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight * 0.9;
+    if (immediate && delay === 0) {
+      setVisible(true);
+      return;
+    }
 
-      gsap.fromTo(
-        targets,
-        { opacity: 0, y },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power3.out",
-          delay,
-          stagger: stagger ? staggerEach : 0,
-          // Kill any half-finished tween on these targets (e.g. React StrictMode's
-          // double-mount in dev) so they can't freeze at a partial opacity.
-          overwrite: true,
-          // Clear the inline transform once revealed so hover lifts and layout
-          // transforms (e.g. the featured tier's offset) aren't overridden.
-          clearProps: "transform",
-          scrollTrigger: inView ? undefined : { trigger: el, start, once: true },
-        },
-      );
-    }, ref);
+    if (isInViewport(el)) {
+      setVisible(true);
+    }
+  }, [immediate, delay]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || visible) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setVisible(true);
+      return;
+    }
+
+    if (immediate) {
+      const timer = window.setTimeout(() => setVisible(true), delay * 1000);
+      return () => window.clearTimeout(timer);
+    }
+
+    const show = () => setVisible(true);
+
+    if (isInViewport(el)) {
+      show();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          show();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0, rootMargin: "0px 0px 15% 0px" },
+    );
+
+    observer.observe(el);
+
+    const onScroll = () => {
+      if (isInViewport(el)) {
+        show();
+        observer.disconnect();
+        window.removeEventListener("scroll", onScroll, { capture: true });
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
 
     return () => {
-      ctx.revert();
-      // Safety net: never leave content invisible if a tween was interrupted.
-      gsap.set(targets, { clearProps: "opacity,transform" });
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll, { capture: true });
     };
-  }, []);
+  }, [immediate, delay, visible]);
+
+  const style = {
+    "--reveal-y": `${y}px`,
+    "--reveal-delay": `${delay}s`,
+    "--reveal-stagger": `${staggerEach}s`,
+  } as CSSProperties;
 
   return (
-    <Tag ref={ref} className={className}>
+    <Tag
+      ref={ref}
+      className={`${stagger ? "reveal-stagger" : "reveal"} ${visible ? "is-visible" : ""} ${className}`.trim()}
+      style={style}
+    >
       {children}
     </Tag>
   );

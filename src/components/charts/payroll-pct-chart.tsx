@@ -27,7 +27,7 @@ function ChartTooltip({
   if (!row) return null;
   const over = row.pct > row.goal;
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs">
       <p className="mb-1 font-mono text-[10px] text-ink-muted/70">{label}</p>
       <p className="flex items-center justify-between gap-4">
         <span className="text-ink-muted">Payroll %</span>

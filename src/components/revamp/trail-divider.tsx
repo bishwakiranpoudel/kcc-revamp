@@ -1,20 +1,12 @@
-import Image from "next/image";
-
-/** Subtle paw-trail strip between trail sections. */
+/** Thin connector between chaos and summit — same valley surface, no extra black slab. */
 export function TrailDivider() {
   return (
     <div
       aria-hidden
-      className="trail-dark pointer-events-none relative z-[1] -my-px bg-trail-bg py-6 sm:py-8"
+      className="trail-dark relative z-[1] -my-px bg-trail-bg-deep py-4 sm:py-5"
     >
-      <div className="page-container">
-        <Image
-          src="/graphics/paw-trail.png"
-          alt=""
-          width={1400}
-          height={350}
-          className="mx-auto h-10 w-full max-w-3xl object-contain opacity-70 mix-blend-screen sm:h-12"
-        />
+      <div className="page-container flex justify-center">
+        <div className="h-px w-full max-w-md bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </div>
     </div>
   );

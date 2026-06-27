@@ -61,7 +61,7 @@ function MoneyTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="border-line bg-surface rounded-lg border px-3 py-2 text-xs shadow-sm">
+    <div className="border-line bg-surface rounded-lg border px-3 py-2 text-xs">
       <p className="mb-1 font-semibold text-ink-muted">{label}</p>
       <ul className="tabular space-y-1 font-mono text-[11px]">
         {payload.map((p, i) => (
@@ -92,7 +92,7 @@ function PctTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="border-line bg-surface rounded-lg border px-3 py-2 text-xs shadow-sm">
+    <div className="border-line bg-surface rounded-lg border px-3 py-2 text-xs">
       <p className="mb-1 font-semibold text-ink-muted">{label}</p>
       <p className="tabular font-mono text-[11px] text-ink">
         {Number(payload[0]?.value).toFixed(1)}%
@@ -144,7 +144,7 @@ export function QuickbooksDemo() {
           <select
             value={loc}
             onChange={(e) => setLoc(e.target.value as LocationKey)}
-            className="border-line bg-background/80 h-8 max-w-[16rem] rounded-md border px-2 text-xs font-medium text-ink shadow-sm"
+            className="border-line bg-background/80 h-8 max-w-[16rem] rounded-md border px-2 text-xs font-medium text-ink"
           >
             {LOCATIONS.map((l) => (
               <option key={l.key} value={l.key}>

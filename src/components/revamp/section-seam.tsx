@@ -8,8 +8,8 @@
  * context (selectors `.valley-seam-back` / `.valley-seam-front-group`).
  */
 export function SectionSeam({
-  skyColor = "#f3ede2",
-  midColor = "#e7dcc9",
+  skyColor = "#ede4d8",
+  midColor = "#e3d9cc",
   className = "",
 }: {
   skyColor?: string;

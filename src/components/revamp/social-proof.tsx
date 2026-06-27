@@ -1,4 +1,5 @@
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
+import { Reveal } from "@/components/revamp/reveal";
 
 const quotes = [
   {
@@ -23,33 +24,33 @@ const quotes = [
 
 export function SocialProof() {
   return (
-    <section className="trail-section relative overflow-hidden py-[var(--section-py)]">
-      <div className="section-wash-purple absolute inset-0 z-0 opacity-50" />
+    <section className="section-tint-cream relative overflow-hidden py-[var(--section-py)]">
+      <PageContainer className="relative z-10">
+        <Reveal>
+          <SectionHeader
+            align="center"
+            eyebrow="Don't take our word for it"
+            title="Owners who stopped flying blind"
+            description="Here's what changed once every location lived on one screen."
+          />
+        </Reveal>
 
-      <PageContainer>
-        <SectionHeader
-          align="center"
-          eyebrow="Don't take our word for it"
-          title="Owners who stopped flying blind"
-          description="Here's what changed once every location lived on one screen."
-        />
-
-        <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2 lg:grid-cols-3">
+        <Reveal stagger staggerEach={0.1} delay={0.06} className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2 lg:grid-cols-3">
           {quotes.map((item) => (
             <figure
               key={item.name}
-              className="trail-card flex h-full flex-col rounded-2xl p-6 sm:p-7"
+              className="trail-card flex h-full flex-col p-6 sm:p-7"
             >
               <blockquote className="flex-1 text-sm leading-relaxed text-trail-muted sm:text-[0.9375rem]">
                 &ldquo;{item.quote}&rdquo;
               </blockquote>
-              <figcaption className="mt-5 border-t border-trail-border pt-4">
+              <figcaption className="mt-5 pt-4">
                 <p className="text-sm font-semibold text-trail-ink">{item.name}</p>
                 <p className="text-xs text-trail-faint">{item.role}</p>
               </figcaption>
             </figure>
           ))}
-        </div>
+        </Reveal>
       </PageContainer>
     </section>
   );

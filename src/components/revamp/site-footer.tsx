@@ -4,7 +4,7 @@ import { PageContainer } from "@/components/revamp/section-ui";
 
 export function SiteFooter() {
   return (
-    <footer className="trail-section border-t border-trail-border py-10 sm:py-12">
+    <footer className="trail-section py-10 sm:py-12">
       <PageContainer className="flex flex-col items-center justify-between gap-5 sm:flex-row sm:gap-6">
         <Image
           src="/logo/logo_full.png"

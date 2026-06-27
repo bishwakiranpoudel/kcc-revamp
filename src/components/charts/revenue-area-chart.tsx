@@ -35,7 +35,7 @@ function ChartTooltip({
   const row = payload[0]?.payload;
   if (!row) return null;
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs">
       <p className="mb-1.5 font-mono text-[10px] text-ink-muted/70">{row.date}</p>
       <ul className="space-y-1">
         {SERIES.map((s) => (
@@ -82,7 +82,7 @@ export function RevenueAreaChart({
               onClick={() => setMode(m)}
               className={`${seg} ${
                 mode === m
-                  ? "bg-surface text-ink shadow-sm"
+                  ? "bg-surface text-ink"
                   : "text-ink-muted/60 hover:text-ink"
               }`}
             >

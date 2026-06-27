@@ -1,12 +1,5 @@
-"use client";
-
-import { useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
-
-gsap.registerPlugin(ScrollTrigger);
+import { Reveal } from "@/components/revamp/reveal";
 
 const features = [
   {
@@ -36,146 +29,41 @@ const features = [
 ];
 
 export function ProductFeatures() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLElement | null)[]>([]);
-
-  useIsomorphicLayoutEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || !sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
-
-      cards.forEach((card, i) => {
-        gsap.set(card, {
-          opacity: 0,
-          y: 56,
-          x: i % 2 === 0 ? -20 : 20,
-          scale: 0.94,
-        });
-      });
-
-      ScrollTrigger.matchMedia({
-        "(min-width: 768px)": () => {
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "+=260%",
-              pin: true,
-              scrub: 0.8,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          const slot = 1 / (cards.length + 0.5);
-
-          cards.forEach((card, i) => {
-            tl.to(
-              card,
-              {
-                opacity: 1,
-                y: 0,
-                x: 0,
-                scale: 1,
-                ease: "none",
-                duration: slot * 0.85,
-              },
-              slot * i + 0.08,
-            );
-          });
-
-          tl.to(
-            headerRef.current,
-            { opacity: 0.45, y: -16, ease: "none", duration: slot * 2 },
-            slot * 2,
-          );
-        },
-
-        "(max-width: 767px)": () => {
-          gsap.set(cards, { opacity: 1, y: 0, x: 0, scale: 1 });
-
-          cards.forEach((card, i) => {
-            gsap.fromTo(
-              card,
-              { opacity: 0, y: 40, x: i % 2 === 0 ? -16 : 16, scale: 0.96 },
-              {
-                opacity: 1,
-                y: 0,
-                x: 0,
-                scale: 1,
-                scrollTrigger: {
-                  trigger: card,
-                  start: "top 92%",
-                  end: "top 70%",
-                  scrub: 1,
-                },
-              },
-            );
-          });
-        },
-      });
-    }, sectionRef);
-
-    return () => {
-      ctx.revert();
-      // ScrollTrigger.matchMedia pins aren't captured by the context, so revert
-      // them explicitly — otherwise the pin-spacer wrapper leaks and React
-      // throws removeChild when this section unmounts during navigation.
-      ScrollTrigger.clearMatchMedia();
-    };
-  }, []);
-
   return (
     <section
       id="features"
-      ref={sectionRef}
-      className="trail-section relative scroll-mt-[var(--header-h)] overflow-hidden"
+      className="section-tint-cream relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
     >
-      <div className="section-wash-purple absolute inset-0 z-0 opacity-70" />
-
-      <PageContainer className="flex min-h-[min(100svh,800px)] flex-col justify-center py-12 md:min-h-screen md:py-0 md:pt-[calc(var(--header-h)+1rem)] md:pb-10">
-        <div ref={headerRef}>
+      <PageContainer className="relative z-10">
+        <Reveal>
           <SectionHeader
             align="center"
             eyebrow="What you get"
             title="Every number you chase, in one place"
             description="The things you check across five logins every morning — revenue, payroll, occupancy, and profit — now on one screen for every location at once."
           />
-        </div>
+        </Reveal>
 
-        <div className="mx-auto mt-7 w-full max-w-5xl overflow-hidden rounded-3xl border border-trail-border sm:mt-9">
-          <div className="grid gap-px bg-trail-border sm:grid-cols-2 md:grid-cols-3">
-            {features.map((feature, i) => (
-              <article
-                key={feature.title}
-                className="feature-card bg-trail-surface-strong p-5 sm:p-6"
-              >
-                <div
-                  ref={(el) => {
-                    cardRefs.current[i] = el;
-                  }}
-                  className="will-change-transform"
-                >
-                  <span className="font-mono text-[0.6875rem] text-trail-orange">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="heading-card mt-2 text-trail-ink">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-trail-muted">
-                    {feature.body}
-                  </p>
-                </div>
+        <Reveal
+          stagger
+          staggerEach={0.08}
+          delay={0.06}
+          className="mx-auto mt-7 grid w-full max-w-5xl gap-4 sm:mt-9 sm:grid-cols-2 md:grid-cols-3"
+        >
+          {features.map((feature, i) => (
+            <article key={feature.title} className="feature-card p-5 sm:p-6">
+                <span className="font-mono text-[0.6875rem] text-trail-orange">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="heading-card mt-2 text-trail-ink">
+                  {feature.title}
+                </h3>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-trail-muted">
+                  {feature.body}
+                </p>
               </article>
-            ))}
-          </div>
-        </div>
-
-        <p className="mt-6 text-center text-xs text-trail-faint md:hidden">
-          Scroll — cards reveal one by one
-        </p>
+          ))}
+        </Reveal>
       </PageContainer>
     </section>
   );

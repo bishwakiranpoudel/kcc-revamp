@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getScrollY, subscribeScroll } from "@/lib/scroll";
 
 export function ScrollProgress() {
@@ -46,12 +45,10 @@ export function ScrollProgress() {
 
     const unsubScroll = subscribeScroll(onScroll);
     window.addEventListener("resize", onResize);
-    ScrollTrigger.addEventListener("refresh", onResize);
 
     return () => {
       unsubScroll();
       window.removeEventListener("resize", onResize);
-      ScrollTrigger.removeEventListener("refresh", onResize);
     };
   }, []);
 

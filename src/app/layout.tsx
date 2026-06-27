@@ -6,8 +6,6 @@ import {
   JetBrains_Mono,
 } from "next/font/google";
 import "./globals.css";
-import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
-import { ScrollTriggerRefresh } from "@/components/providers/scroll-trigger-refresh";
 import { ScrollProgress } from "@/components/revamp/scroll-progress";
 import { SiteHeader } from "@/components/revamp/site-header";
 import { SiteFooter } from "@/components/revamp/site-footer";
@@ -76,22 +74,19 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-dvh antialiased">
-        <SmoothScrollProvider>
-          <ScrollTriggerRefresh />
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-trail-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
-          >
-            Skip to content
-          </a>
-          <ScrollProgress />
-          <div aria-hidden className="demo-nav-scrim pointer-events-none fixed inset-x-0 top-0 z-40 h-24" />
-          <SiteHeader />
-          <main id="main" className="relative z-10">
-            {children}
-          </main>
-          <SiteFooter />
-        </SmoothScrollProvider>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-trail-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
+        >
+          Skip to content
+        </a>
+        <ScrollProgress />
+        <div aria-hidden className="demo-nav-scrim pointer-events-none fixed inset-x-0 top-0 z-40 h-24" />
+        <SiteHeader />
+        <main id="main" className="relative z-10">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

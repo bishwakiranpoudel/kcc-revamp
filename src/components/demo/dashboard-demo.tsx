@@ -154,7 +154,7 @@ export function DashboardDemo() {
         <select
           value={loc}
           onChange={(e) => setLoc(e.target.value as LocationKey)}
-          className="border-line bg-background/80 h-8 rounded-md border px-2 text-xs font-medium text-ink shadow-sm"
+          className="border-line bg-background/80 h-8 rounded-md border px-2 text-xs font-medium text-ink"
           aria-label="Location"
         >
           {LOCATIONS.map((l) => (

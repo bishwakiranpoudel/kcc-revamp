@@ -149,7 +149,7 @@ export function PinnedDemo({
   );
 
   const windowEl = (
-    <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-navy-900/20 ring-1 ring-black/5">
+    <div className="overflow-hidden rounded-xl bg-surface">
       <div ref={headRef}>
         {chrome}
         {toolbar}
@@ -187,7 +187,7 @@ export function PinnedDemo({
           className="pointer-events-none absolute inset-x-0 bottom-0 flex h-14 items-end justify-center bg-gradient-to-t from-background to-transparent pb-2"
           style={{ opacity: 1 }}
         >
-          <span className="flex items-center gap-1.5 rounded-full border border-line bg-surface/90 px-3 py-1 text-[10px] font-bold tracking-widest text-ink-muted/70 uppercase shadow-sm">
+          <span className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-[10px] font-bold tracking-widest text-ink-muted/70 uppercase">
             Scroll to explore
           </span>
         </div>

@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
 import { PageContainer, SectionHeader } from "@/components/revamp/section-ui";
-
-gsap.registerPlugin(ScrollTrigger);
+import { Reveal } from "@/components/revamp/reveal";
 
 const faqs = [
   {
@@ -35,72 +32,48 @@ const faqs = [
 ];
 
 export function FaqAccordion() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [openCount, setOpenCount] = useState(1);
-
-  useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-
-    let lastCount = 1;
-
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 65%",
-        end: "bottom 35%",
-        scrub: 1,
-        onUpdate: (self) => {
-          const count = Math.max(1, Math.ceil(self.progress * faqs.length));
-          if (count !== lastCount) {
-            lastCount = count;
-            setOpenCount(count);
-          }
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section
       id="faq"
-      ref={sectionRef}
-      className="trail-section scroll-mt-[var(--header-h)] py-[var(--section-py)]"
+      className="section-tint-cream relative scroll-mt-[var(--header-h)] py-[var(--section-py)]"
     >
       <PageContainer>
-        <SectionHeader
-          align="center"
-          eyebrow="Before you ask"
-          title="The questions every owner asks us"
-          description="Straight answers. If yours isn't here, ask us on the demo — we'll tell you the truth."
-        />
+        <Reveal>
+          <SectionHeader
+            align="center"
+            eyebrow="Before you ask"
+            title="The questions every owner asks us"
+            description="Straight answers. If yours isn't here, ask us on the demo — we'll tell you the truth."
+          />
+        </Reveal>
 
-        <div className="mx-auto mt-10 max-w-2xl space-y-2.5 sm:mt-12">
+        <Reveal stagger staggerEach={0.07} delay={0.06} className="mx-auto mt-10 max-w-2xl space-y-2.5 sm:mt-12">
           {faqs.map((item, i) => {
-            const isOpen = i < openCount;
+            const isOpen = i === openIndex;
             return (
-              <div key={item.q} className="trail-card overflow-hidden rounded-2xl">
-                <div className="flex items-center justify-between gap-4 px-5 py-4">
+              <div key={item.q} className="trail-card overflow-hidden rounded-xl">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenIndex(isOpen ? -1 : i)}
+                >
                   <span className="font-semibold text-trail-ink">{item.q}</span>
                   <span className="shrink-0 text-trail-cyan">{isOpen ? "−" : "+"}</span>
-                </div>
-                <div
-                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="px-5 pb-4 text-sm leading-relaxed text-trail-muted">
+                </button>
+                {isOpen ? (
+                  <div className="px-5 pb-4">
+                    <p className="text-sm leading-relaxed text-trail-muted">
                       {item.a}
                     </p>
                   </div>
-                </div>
+                ) : null}
               </div>
             );
           })}
-        </div>
+        </Reveal>
       </PageContainer>
     </section>
   );

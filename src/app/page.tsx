@@ -1,7 +1,6 @@
 import { HeroZoom } from "@/components/revamp/hero-zoom";
 import { IntegrationsStrip } from "@/components/revamp/integrations-strip";
 import { ChaosCollide } from "@/components/revamp/chaos-collide";
-import { TrailDivider } from "@/components/revamp/trail-divider";
 import { SummitPortal } from "@/components/revamp/summit-portal";
 import { DemoSections } from "@/components/revamp/demo-sections";
 import { ProductFeatures } from "@/components/revamp/product-features";
@@ -18,7 +17,6 @@ export default function HomePage() {
       <HeroZoom />
       <IntegrationsStrip />
       <ChaosCollide />
-      <TrailDivider />
       <SummitPortal />
       <DemoSections />
       <ProductFeatures />

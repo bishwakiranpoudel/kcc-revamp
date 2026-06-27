@@ -27,7 +27,7 @@ function ChartTooltip({
   const row = payload[0]?.payload;
   if (!row) return null;
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs">
       <p className="mb-1 font-mono text-[10px] text-ink-muted/70">
         {label} {row.projected ? "· projected" : ""}
       </p>

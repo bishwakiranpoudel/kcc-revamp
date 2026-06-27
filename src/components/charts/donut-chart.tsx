@@ -15,7 +15,7 @@ function DonutTooltip({
   const row = payload[0]?.payload;
   if (!row) return null;
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs">
       <p className="flex items-center justify-between gap-4">
         <span className="flex items-center gap-1.5 text-ink-muted">
           <span

@@ -149,7 +149,7 @@ export default function PricingPage() {
                 key={tier.name}
                 className={`trail-card relative flex h-full flex-col rounded-3xl p-6 sm:p-7 ${
                   tier.featured
-                    ? "ring-2 ring-trail-cyan md:-translate-y-3 md:shadow-xl"
+                    ? "bg-[color-mix(in_oklab,var(--trail-cyan)_10%,var(--trail-surface-strong))] md:-translate-y-2"
                     : ""
                 }`}
               >

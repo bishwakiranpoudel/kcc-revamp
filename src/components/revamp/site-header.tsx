@@ -50,7 +50,7 @@ export function SiteHeader() {
       <div
         className={`flex w-full max-w-[var(--page-max)] items-center justify-between rounded-full px-4 py-2.5 transition-colors sm:px-5 sm:py-3 ${
           onDemo || scrolled
-            ? "border border-line bg-surface/90 shadow-lg shadow-navy-900/10 backdrop-blur-md"
+            ? "bg-surface/95 backdrop-blur-md"
             : "glass-pill"
         }`}
       >
@@ -125,7 +125,7 @@ export function SiteHeader() {
       {open && (
         <div
           className={`absolute inset-x-4 top-[calc(100%+0.5rem)] rounded-3xl p-4 md:hidden ${
-            onDemo ? "border border-line bg-surface shadow-lg" : "glass-pill"
+            onDemo ? "bg-surface" : "glass-pill"
           }`}
         >
           {NAV_LINKS.map((l) => (

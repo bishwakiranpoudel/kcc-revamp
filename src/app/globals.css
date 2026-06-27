@@ -12,12 +12,15 @@
   /* ── Trail marketing shell — warm light theme ──
      Most sections inherit these. The dramatic "valley" (chaos → divider →
      summit) re-overrides them via the .trail-dark scope further down. */
-  --trail-bg: #faf7f2;
-  --trail-bg-deep: #f3ede2;
-  --trail-bg-race: #ece4d6;
-  --trail-bg-orbit: #f6f1e8;
-  --trail-surface: #ffffff;
-  --trail-surface-strong: #ffffff;
+  --trail-bg: #faf6f0;
+  --trail-bg-deep: #f5efe6;
+  --trail-bg-race: #ede4d8;
+  --trail-bg-orbit: #f7f2ea;
+  --trail-surface: color-mix(in oklab, var(--trail-orange) 3.5%, white);
+  --trail-surface-strong: color-mix(in oklab, var(--trail-cream) 6%, white);
+  --trail-surface-soft: color-mix(in oklab, var(--trail-purple) 5%, var(--trail-bg));
+  --trail-surface-mint: color-mix(in oklab, var(--trail-green) 6%, var(--trail-bg));
+  --trail-surface-sky: color-mix(in oklab, var(--trail-cyan) 7%, var(--trail-bg));
   --trail-ink: #1f1b16;
   --trail-ink-muted: #6f655a;
   --trail-ink-faint: rgba(31, 27, 22, 0.5);
@@ -34,10 +37,11 @@
   --trail-portal-from: #eef3fb;
   --trail-portal-mid: #f4f6f9;
   --trail-portal-to: #ffffff;
-  --trail-glow-orange: rgba(234, 88, 12, 0.14);
-  --trail-glow-cyan: rgba(14, 116, 144, 0.12);
-  --trail-glow-purple: rgba(124, 58, 237, 0.12);
-  --trail-card-shadow: 0 20px 48px -30px rgba(31, 27, 22, 0.5);
+  --trail-glow-orange: rgba(234, 88, 12, 0.2);
+  --trail-glow-cyan: rgba(14, 116, 144, 0.18);
+  --trail-glow-purple: rgba(124, 58, 237, 0.17);
+  --trail-card-shadow: none;
+  --radius-card: 1.25rem;
   --trail-gradient-headline: linear-gradient(
     90deg,
     var(--trail-orange),
@@ -111,32 +115,79 @@
 }
 
 /* ── Dark "valley" scope ──
-   Re-overrides trail tokens to the original dark adventure palette for the
-   chaos → divider → summit passage, where the cinematic black-background art
-   (dog scenes, topo lines, paw trail, mountain) is designed to live. */
+   Navy slate band for the chaos → summit passage. Softer than pure black so it
+   bridges the warm light sections and the cool demo zone without feeling like a
+   separate cinematic mode. */
 .trail-dark {
-  --trail-bg: #050505;
-  --trail-bg-deep: #030712;
-  --trail-bg-race: #0a1628;
-  --trail-bg-orbit: #070707;
-  --trail-surface: rgba(245, 240, 230, 0.04);
-  --trail-surface-strong: rgba(245, 240, 230, 0.08);
-  --trail-ink: #f5f0e6;
-  --trail-ink-muted: #a89f8f;
-  --trail-ink-faint: rgba(245, 240, 230, 0.45);
-  --trail-border: rgba(245, 240, 230, 0.12);
-  --trail-border-strong: rgba(245, 240, 230, 0.22);
+  --trail-bg: #171412;
+  --trail-bg-deep: #110f0d;
+  --trail-bg-race: #1f1b18;
+  --trail-bg-orbit: #141110;
+  --trail-surface: rgba(255, 248, 240, 0.06);
+  --trail-surface-strong: rgba(255, 248, 240, 0.1);
+  --trail-ink: #f4f1ea;
+  --trail-ink-muted: #9aa3b0;
+  --trail-ink-faint: rgba(244, 241, 234, 0.48);
+  --trail-border: rgba(255, 255, 255, 0.1);
+  --trail-border-strong: rgba(255, 255, 255, 0.16);
   --trail-orange: #f97316;
   --trail-green: #4ade80;
-  --trail-cream: #f5e6c8;
+  --trail-cream: #e8dcc8;
   --trail-cyan: #22d3ee;
   --trail-purple: #c084fc;
-  --trail-glass: rgba(245, 240, 230, 0.06);
-  --trail-glass-border: rgba(245, 240, 230, 0.12);
-  --trail-glow-orange: rgba(249, 115, 22, 0.15);
-  --trail-glow-cyan: rgba(34, 211, 238, 0.12);
-  --trail-glow-purple: rgba(192, 132, 252, 0.14);
+  --trail-glass: rgba(255, 255, 255, 0.06);
+  --trail-glass-border: rgba(255, 255, 255, 0.1);
+  --trail-glow-orange: rgba(249, 115, 22, 0.12);
+  --trail-glow-cyan: rgba(34, 211, 238, 0.1);
+  --trail-glow-purple: rgba(192, 132, 252, 0.1);
   --trail-card-shadow: none;
+}
+
+/* Fade the warm sand integrations section into the valley. */
+.valley-enter-fade {
+  pointer-events: none;
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 4;
+  height: clamp(5rem, 14vw, 9rem);
+  background: linear-gradient(
+    to bottom,
+    #ede4d6 0%,
+    color-mix(in oklab, #ede4d8 40%, #171412) 42%,
+    transparent 100%
+  );
+}
+
+/* Exit the valley into the demo / paper zone. */
+.valley-exit-fade {
+  pointer-events: none;
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 40;
+  height: clamp(6rem, 18vw, 11rem);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklab, var(--paper) 35%, transparent) 45%,
+    var(--paper) 100%
+  );
+}
+
+.valley-surface-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 50% 0%,
+      color-mix(in oklab, var(--trail-cyan) 8%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 80% 100%,
+      color-mix(in oklab, var(--trail-orange) 6%, transparent),
+      transparent 60%
+    );
 }
 
 @theme inline {
@@ -204,15 +255,6 @@
 
 html {
   scroll-padding-top: calc(var(--header-h) + 0.75rem);
-}
-
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
 }
 
 .pet-cutout,
@@ -386,11 +428,11 @@ select:focus-visible,
   color: #fff;
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    filter 0.2s ease;
 }
 .btn-trail-primary:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 14px 32px -12px color-mix(in oklab, var(--trail-cyan) 55%, transparent);
+  transform: scale(1.02);
+  filter: brightness(1.06);
 }
 
 .btn-trail-secondary {
@@ -398,21 +440,22 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--trail-border);
+  border: none;
+  background: color-mix(in oklab, var(--trail-orange) 9%, var(--trail-bg-deep));
   padding: 0.875rem 1.75rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 600;
   color: var(--trail-ink);
   transition:
-    border-color 0.2s ease,
     color 0.2s ease,
-    background-color 0.2s ease;
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 .btn-trail-secondary:hover {
-  border-color: var(--trail-orange);
   color: var(--trail-orange);
-  background-color: color-mix(in oklab, var(--trail-orange) 8%, transparent);
+  background-color: color-mix(in oklab, var(--trail-orange) 14%, var(--trail-bg-deep));
+  transform: scale(1.02);
 }
 
 .btn-product-primary {
@@ -441,7 +484,7 @@ select:focus-visible,
   height: 2.5rem;
   width: 1.375rem;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--trail-border);
+  background: color-mix(in oklab, var(--trail-cyan) 10%, var(--trail-bg-deep));
   padding: 0.25rem;
 }
 .scroll-cue-dot {
@@ -484,21 +527,28 @@ select:focus-visible,
 
 .trail-card {
   background: var(--trail-surface);
-  border: 1px solid var(--trail-border);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--trail-card-shadow);
+  border: none;
+  border-radius: var(--radius-card);
+  box-shadow: none;
 }
 
 .trail-card-strong {
   background: var(--trail-surface-strong);
-  border: 1px solid var(--trail-border);
-  box-shadow: var(--trail-card-shadow);
+  border: none;
+  border-radius: var(--radius-card);
+  box-shadow: none;
+}
+
+.feature-card {
+  background: color-mix(in oklab, var(--trail-surface-strong) 90%, var(--trail-bg-deep));
+  border: none;
+  border-radius: var(--radius-card);
 }
 
 .glass-pill {
-  background: var(--trail-glass);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--trail-glass-border);
+  background: color-mix(in oklab, var(--trail-bg) 72%, white);
+  backdrop-filter: blur(14px);
+  border: none;
 }
 
 .halftone {
@@ -534,37 +584,200 @@ select:focus-visible,
 
 .section-wash-orange {
   background: radial-gradient(
-    ellipse 80% 60% at 20% 0%,
-    color-mix(in oklab, var(--trail-orange) 12%, transparent),
-    transparent 70%
+    ellipse 85% 65% at 18% 0%,
+    color-mix(in oklab, var(--trail-orange) 18%, transparent),
+    transparent 72%
   );
 }
 
 .section-wash-purple {
   background: radial-gradient(
-    ellipse 70% 55% at 80% 20%,
-    var(--trail-glow-purple),
-    transparent 70%
+    ellipse 75% 60% at 82% 18%,
+    color-mix(in oklab, var(--trail-purple) 16%, transparent),
+    transparent 72%
   );
 }
 
 .section-wash-cyan {
   background: radial-gradient(
-    ellipse 65% 50% at 50% 50%,
-    var(--trail-glow-cyan),
-    transparent 70%
+    ellipse 70% 55% at 50% 48%,
+    color-mix(in oklab, var(--trail-cyan) 14%, transparent),
+    transparent 72%
   );
+}
+
+.section-wash-green {
+  background: radial-gradient(
+    ellipse 72% 58% at 22% 88%,
+    color-mix(in oklab, var(--trail-green) 14%, transparent),
+    transparent 74%
+  );
+}
+
+.section-wash-warm {
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 12% 20%,
+      color-mix(in oklab, var(--trail-cream) 16%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 88% 75%,
+      color-mix(in oklab, var(--trail-orange) 12%, transparent),
+      transparent 65%
+    );
+}
+
+/* Ambient color pools — soft depth without borders. */
+.section-ambient {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(64px);
+}
+.section-ambient-orange {
+  background: color-mix(in oklab, var(--trail-orange) 22%, transparent);
+}
+.section-ambient-cyan {
+  background: color-mix(in oklab, var(--trail-cyan) 18%, transparent);
+}
+.section-ambient-purple {
+  background: color-mix(in oklab, var(--trail-purple) 16%, transparent);
+}
+
+/* ── Section surface tints — flat bases; accent washes are opt-in per section ── */
+.section-tint-cream {
+  background: var(--trail-bg);
+  color: var(--trail-ink);
+}
+
+.section-tint-linen {
+  background: var(--trail-bg-deep);
+  color: var(--trail-ink);
+}
+
+.section-tint-sand {
+  background: var(--trail-bg-race);
+  color: var(--trail-ink);
+}
+
+.section-tint-sky {
+  background: color-mix(in oklab, var(--trail-cyan) 5%, var(--trail-bg));
+  color: var(--trail-ink);
+}
+
+.section-tint-lavender {
+  background: var(--trail-bg);
+  color: var(--trail-ink);
+}
+
+.section-tint-white {
+  background: var(--trail-surface);
+  color: var(--trail-ink);
+}
+
+.section-accent-top::before {
+  display: none;
+}
+
+.section-bridge-from-dark {
+  position: relative;
+}
+
+.section-bridge-from-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 4;
+  height: clamp(3rem, 8vw, 5rem);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--trail-ink) 7%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ── One-time presentation reveals — content stays visible; animation is optional ── */
+.reveal,
+.reveal-stagger > * {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, 24px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal.is-visible {
+    animation: reveal-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--reveal-delay, 0s);
+  }
+
+  .reveal-stagger.is-visible > * {
+    animation: reveal-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .reveal-stagger.is-visible > :nth-child(1) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 0 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(2) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 1 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(3) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 2 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(4) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 3 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(5) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 4 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(6) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 5 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(7) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 6 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(8) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 7 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(9) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 8 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(10) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 9 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(11) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 10 * var(--reveal-stagger, 0.1s));
+  }
+  .reveal-stagger.is-visible > :nth-child(12) {
+    animation-delay: calc(var(--reveal-delay, 0s) + 11 * var(--reveal-stagger, 0.1s));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.is-visible,
+  .reveal-stagger.is-visible > * {
+    animation: none;
+  }
 }
 
 .pet-cutout {
   mix-blend-mode: lighten;
-  filter: drop-shadow(0 12px 28px var(--trail-glow-orange));
 }
 
 .trail-pet-image {
   mix-blend-mode: lighten;
-  filter: contrast(1.35) brightness(1.08) saturate(1.1)
-    drop-shadow(0 16px 36px rgba(249, 115, 22, 0.22));
+  filter: contrast(1.35) brightness(1.08) saturate(1.1);
   mask-image: linear-gradient(to top, transparent 0%, black 18%, black 92%, transparent 100%);
 }
 
@@ -582,7 +795,6 @@ select:focus-visible,
   width: min(28vw, 11rem);
   height: auto;
   opacity: 0.55;
-  filter: drop-shadow(0 8px 24px rgba(34, 211, 238, 0.2));
 }
 
 .chaos-burst {
@@ -635,7 +847,6 @@ select:focus-visible,
 
 /* ── Wacky ridge seam (light → dark valley) ── */
 .valley-seam-crest {
-  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.5));
   opacity: 0.55;
   animation: seam-crest-pulse 3.4s ease-in-out infinite;
 }
@@ -672,12 +883,7 @@ select:focus-visible,
 
 /* ── Demo zone: trail → product handoff ── */
 .demo-zone {
-  background: linear-gradient(
-    180deg,
-    var(--trail-portal-to) 0%,
-    var(--paper) 8%,
-    var(--paper) 100%
-  );
+  background: var(--paper);
   color: var(--ink);
 }
 
@@ -699,17 +905,17 @@ select:focus-visible,
 }
 
 .light-card {
-  background: var(--trail-light-card);
-  border: 1px solid color-mix(in oklab, var(--ink) 6%, transparent);
-  box-shadow: 0 12px 32px -22px color-mix(in oklab, var(--navy-900) 40%, transparent);
+  background: color-mix(in oklab, var(--trail-light-card) 85%, white);
+  border: none;
+  border-radius: var(--radius-card);
+  box-shadow: none;
 }
 
-/* Crisp white card with a soft, low-contrast shadow — used where the heavier
-   tinted `.light-card` reads too aggressively (e.g. the contact page grid). */
 .soft-card {
   background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: 0 8px 24px -18px color-mix(in oklab, var(--navy-900) 24%, transparent);
+  border: none;
+  border-radius: var(--radius-card);
+  box-shadow: none;
 }
 
 /* ── KCC app surface (embedded demos) ── */
@@ -802,8 +1008,8 @@ body.demo-active .demo-nav-scrim {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  border: 1.5px solid var(--trail-border-strong);
-  background: var(--trail-bg);
+  border: none;
+  background: color-mix(in oklab, var(--trail-cyan) 10%, var(--trail-bg-deep));
   font-family: var(--font-jetbrains), ui-monospace, monospace;
   font-size: 0.875rem;
   font-weight: 700;
@@ -825,20 +1031,7 @@ body.demo-active .demo-nav-scrim {
   pointer-events: none;
 }
 .how-stage-shadow {
-  position: absolute;
-  left: 50%;
-  bottom: -1.5rem;
-  z-index: 0;
-  width: 64%;
-  height: 2.75rem;
-  transform: translateX(-50%);
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    color-mix(in srgb, var(--trail-ink) 18%, transparent),
-    transparent 72%
-  );
-  filter: blur(12px);
-  pointer-events: none;
+  display: none;
 }
 /* Desktop: one persistent card frame holds the swapping content (no doubled
    card edges mid-transition). Mobile: each panel is its own card. */
@@ -848,23 +1041,23 @@ body.demo-active .demo-nav-scrim {
 .how-panel {
   position: relative;
   backface-visibility: hidden;
-  border-radius: 1.5rem;
-  background: var(--trail-surface);
-  border: 1px solid var(--trail-border);
-  box-shadow: var(--trail-card-shadow);
-  backdrop-filter: blur(8px);
+  border-radius: var(--radius-card);
+  background: color-mix(in oklab, var(--trail-surface) 88%, var(--trail-bg-deep));
+  border: none;
+  box-shadow: none;
 }
 @media (min-width: 1024px) {
   .how-stage-frame {
+    position: relative;
     height: 100%;
-    border-radius: 1.5rem;
-    background: var(--trail-surface);
-    border: 1px solid var(--trail-border);
-    box-shadow: var(--trail-card-shadow);
-    backdrop-filter: blur(8px);
+    border-radius: var(--radius-card);
+    background: color-mix(in oklab, var(--trail-surface) 88%, var(--trail-bg-deep));
+    border: none;
+    box-shadow: none;
     overflow: hidden;
   }
-  .how-panel {
+  /* Only stacked inside the old scroll-synced frame — not the static step list. */
+  .how-stage-frame .how-panel {
     position: absolute;
     inset: 0;
     min-height: 0;
