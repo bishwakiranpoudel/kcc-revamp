@@ -32,7 +32,7 @@ const tiers: Tier[] = [
     href: "/demo",
     features: [
       "Live revenue, labor & occupancy",
-      "Gingr, When I Work & QuickBooks sync",
+      "Kennel, scheduling & financial software sync",
       "Daily & weekly performance reports",
       "Read-only, encrypted connections",
       "Email support",
@@ -81,7 +81,7 @@ const assurances = [
 
 const compare: { label: string; single: boolean; multi: boolean; enterprise: boolean }[] = [
   { label: "Live revenue, labor & occupancy", single: true, multi: true, enterprise: true },
-  { label: "Gingr · When I Work · QuickBooks sync", single: true, multi: true, enterprise: true },
+  { label: "Kennel · scheduling · financial software sync", single: true, multi: true, enterprise: true },
   { label: "Group-wide rollups & comparisons", single: false, multi: true, enterprise: true },
   { label: "Per-manager location permissions", single: false, multi: true, enterprise: true },
   { label: "Custom alerts & benchmarks", single: false, multi: true, enterprise: true },

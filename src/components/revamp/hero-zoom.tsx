@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SOFTWARE_COPY } from "@/lib/site";
 import { PageContainer } from "@/components/revamp/section-ui";
 import { Reveal } from "@/components/revamp/reveal";
 
@@ -24,24 +25,24 @@ const stats = [
   {
     value: "1 screen",
     label: "Every location",
-    sub: "Instead of five separate logins",
+    sub: "Instead of multiple separate logins",
   },
 ];
 
 export function HeroZoom() {
   return (
-    <div className="section-tint-cream relative min-h-screen overflow-hidden">
-      <div className="section-wash-orange pointer-events-none absolute inset-0 z-0 opacity-50" />
+    <div className="section-surface-hero relative min-h-screen overflow-hidden">
+      <div aria-hidden className="saas-grid pointer-events-none absolute inset-0 z-0 opacity-70" />
 
       <PageContainer className="relative z-10 grid min-h-screen items-center gap-10 pb-16 pt-[calc(var(--header-h)+1.5rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:pb-20">
         <Reveal immediate y={28}>
           <div>
           <div className="flex flex-wrap items-center gap-3">
-            <span className="eyebrow rounded-full bg-trail-surface px-3 py-1 text-trail-cyan">
+            <span className="eyebrow rounded-full border border-trail-cyan/20 bg-white/80 px-3 py-1 text-trail-cyan backdrop-blur-sm">
               Operations intelligence
             </span>
             <span className="h-px w-10 bg-trail-border" />
-            <span className="eyebrow text-trail-muted">For multi-location owners</span>
+            <span className="eyebrow text-trail-muted">{SOFTWARE_COPY.heroAudience}</span>
           </div>
 
           <h1 className="display-xl mt-5 text-trail-ink">
@@ -52,11 +53,7 @@ export function HeroZoom() {
           </h1>
 
           <p className="lead mt-6 max-w-xl pl-1 text-trail-muted">
-            You run your locations on Gingr, When I Work, and QuickBooks — then
-            stitch the real numbers together by hand.{" "}
-            <span className="font-semibold text-trail-ink">KennelEyes</span> puts
-            revenue, payroll, and profit for every site on one live screen, so
-            you catch the money leaks while you can still stop them.
+            {SOFTWARE_COPY.heroLead}
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
@@ -74,7 +71,7 @@ export function HeroZoom() {
           <div className="relative mx-auto w-full max-w-[min(100%,420px)] lg:max-w-[440px] lg:justify-self-end xl:max-w-[480px]">
           <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-trail-orange/15 via-transparent to-trail-cyan/15 blur-3xl" />
 
-          <div className="trail-card-strong relative z-10 p-5 sm:p-6">
+          <div className="relative z-10 rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--trail-card-shadow)] sm:p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2.5 w-2.5">
@@ -137,7 +134,7 @@ export function HeroZoom() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="trail-card-strong rounded-xl px-4 py-3 sm:py-3.5"
+                className="rounded-xl bg-white px-4 py-3 shadow-[var(--trail-card-shadow)] sm:py-3.5"
               >
                 <span className="font-display block text-xl font-bold tabular text-trail-cyan sm:text-2xl">
                   {s.value}

@@ -32,7 +32,7 @@ export function ProductFeatures() {
   return (
     <section
       id="features"
-      className="section-tint-cream relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
+      className="section-surface-alt relative scroll-mt-[var(--header-h)] overflow-hidden py-[var(--section-py)]"
     >
       <PageContainer className="relative z-10">
         <Reveal>
@@ -40,7 +40,7 @@ export function ProductFeatures() {
             align="center"
             eyebrow="What you get"
             title="Every number you chase, in one place"
-            description="The things you check across five logins every morning — revenue, payroll, occupancy, and profit — now on one screen for every location at once."
+            description="The things you check across multiple logins every morning — revenue, payroll, occupancy, and profit — now on one screen for every location at once."
           />
         </Reveal>
 

@@ -24,7 +24,7 @@ const quotes = [
 
 export function SocialProof() {
   return (
-    <section className="section-tint-cream relative overflow-hidden py-[var(--section-py)]">
+    <section className="section-surface-warm relative overflow-hidden py-[var(--section-py)]">
       <PageContainer className="relative z-10">
         <Reveal>
           <SectionHeader

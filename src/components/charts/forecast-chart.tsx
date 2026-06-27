@@ -32,11 +32,11 @@ function ChartTooltip({
         {label} {row.projected ? "· projected" : ""}
       </p>
       <p className="flex items-center justify-between gap-4">
-        <span className="text-ink-muted">Reservations</span>
+        <span className="text-ink-muted">Scheduled revenue</span>
         <span className="tabular font-bold text-data-daycare">{row.reservations}</span>
       </p>
       <p className="mt-0.5 flex items-center justify-between gap-4">
-        <span className="text-ink-muted">Scheduled hrs</span>
+        <span className="text-ink-muted">Scheduled payroll hrs</span>
         <span className="tabular font-semibold text-data-scheduled">{row.scheduledHours}</span>
       </p>
     </div>

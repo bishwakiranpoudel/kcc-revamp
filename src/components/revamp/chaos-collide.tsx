@@ -1,10 +1,10 @@
 import {
-  BrandLogo,
   PageContainer,
   SectionHeader,
+  SoftwareBadge,
 } from "@/components/revamp/section-ui";
 import { Reveal } from "@/components/revamp/reveal";
-import { INTEGRATIONS } from "@/lib/site";
+import { SOFTWARE_STACK } from "@/lib/site";
 
 /** Evenly spaced on an ellipse (top, bottom-right, bottom-left). */
 const ORBIT_SLOTS = [
@@ -15,7 +15,11 @@ const ORBIT_SLOTS = [
 
 export function ChaosCollide() {
   return (
-    <section className="section-tint-cream relative overflow-hidden py-[var(--section-py)]">
+    <section className="section-surface-warm relative overflow-hidden py-[var(--section-py)]">
+      <div
+        aria-hidden
+        className="section-ambient section-ambient-cyan pointer-events-none absolute -right-16 top-[20%] z-0 size-72 opacity-35"
+      />
       <PageContainer className="relative z-10">
         <Reveal y={28}>
           <div className="mx-auto max-w-2xl text-center">
@@ -24,13 +28,13 @@ export function ChaosCollide() {
               eyebrow="The problem"
               title={
                 <>
-                  Five logins. Zero{" "}
+                  Multiple logins. Zero{" "}
                   <span className="text-gradient-trail text-emph">
                     single answer.
                   </span>
                 </>
               }
-              description="Gingr for bookings. When I Work for labor. QuickBooks for profit. Plus the spreadsheet you rebuild every Monday — none of them talk to each other."
+              description="Kennel software for bookings. Scheduling software for labor. Financial software for profit. Plus the spreadsheets you rebuild every Monday — none of them talk to each other."
             />
           </div>
         </Reveal>
@@ -41,9 +45,9 @@ export function ChaosCollide() {
             <div className="absolute inset-[18%] rounded-[50%] border border-dashed border-trail-cyan/20" />
             <div className="pointer-events-none absolute left-1/2 top-1/2 size-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-trail-cyan/10 blur-2xl" />
 
-            {INTEGRATIONS.map((name, i) => (
+            {SOFTWARE_STACK.map((item, i) => (
               <div
-                key={name}
+                key={item.id}
                 className="absolute -translate-x-1/2 -translate-y-1/2"
                 style={{
                   left: ORBIT_SLOTS[i]?.left ?? "50%",
@@ -51,7 +55,7 @@ export function ChaosCollide() {
                 }}
               >
                 <div className="trail-card-strong rounded-xl p-2.5">
-                  <BrandLogo name={name} size={40} className="border-0" />
+                  <SoftwareBadge item={item} size={40} />
                 </div>
               </div>
             ))}
@@ -60,8 +64,9 @@ export function ChaosCollide() {
 
         <Reveal delay={0.14}>
           <p className="lead mx-auto mt-10 max-w-lg text-center text-trail-cyan">
-            KennelEyes reads all of them and puts revenue, payroll, occupancy,
-            and profit for every location on one live screen.
+            KennelEyes reads your kennel, scheduling, and financial software — then
+            puts revenue, payroll, occupancy, and profit for every location on one
+            live screen.
           </p>
         </Reveal>
       </PageContainer>

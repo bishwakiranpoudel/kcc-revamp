@@ -8,8 +8,9 @@ export function FinalCta() {
   return (
     <section
       id="cta"
-      className="section-tint-cream relative overflow-hidden py-[var(--section-py)]"
+      className="section-surface-cta relative overflow-hidden py-[var(--section-py)]"
     >
+      <div aria-hidden className="saas-grid pointer-events-none absolute inset-0 z-0 opacity-40" />
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <Image
           src="/graphics/dog-cta-light.png"
@@ -20,7 +21,7 @@ export function FinalCta() {
         />
       </div>
 
-      <div className="section-wash-orange pointer-events-none absolute inset-0 z-0 opacity-40" />
+      <div className="section-wash-orange pointer-events-none absolute inset-0 z-0 opacity-35" />
       <PageContainer className="relative z-10 text-center">
         <Reveal y={28}>
           <p className="eyebrow text-trail-orange">Get started</p>
@@ -29,8 +30,8 @@ export function FinalCta() {
             <span className="text-emph text-trail-orange">this week</span>
           </h2>
           <p className="lead mx-auto mt-5 max-w-lg text-trail-muted">
-            Book a 30-minute demo. We&apos;ll connect your Gingr, When I Work, and
-            QuickBooks accounts and put every location on one screen using your
+            Book a 30-minute demo. We&apos;ll connect your kennel, scheduling, and
+            financial software and put every location on one screen using your
             data — not a canned tour. No card. No commitment.
           </p>
         </Reveal>

@@ -9,7 +9,7 @@ import { SectionHeader } from "@/components/revamp/section-ui";
 import { Reveal } from "@/components/revamp/reveal";
 
 const dashboardHighlights = [
-  "Revenue by business line — from the dogs in your care, not just payments collected",
+  "Scheduled payroll vs scheduled revenue — the first chart owners open",
   "Payroll as a % of revenue vs. your target — the critical kennel benchmark",
   "Capacity utilization and labor efficiency (dogs per labor hour) for every site",
   "Reservations vs. staffing, looking 1–2 weeks ahead",
@@ -45,7 +45,7 @@ export function DemoSections() {
               align="center"
               tone="light"
               eyebrow="Live demo"
-              title="Mission Control — the dashboard you'd open every morning"
+              title="Mission Control — the dashboard you will open every morning"
               description="Not a screenshot. A working build of KennelEyes. Switch locations and date ranges; every chart responds like the real app."
             />
           </Reveal>

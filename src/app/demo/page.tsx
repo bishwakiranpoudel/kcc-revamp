@@ -25,7 +25,7 @@ const assurances = [
   {
     icon: PlugsConnected,
     title: "We map it to your tools",
-    body: "See how Gingr, When I Work, and QuickBooks come together.",
+    body: "See how your kennel, scheduling, and financial software come together.",
   },
   {
     icon: Eye,

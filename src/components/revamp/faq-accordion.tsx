@@ -6,7 +6,7 @@ import { Reveal } from "@/components/revamp/reveal";
 
 const faqs = [
   {
-    q: "Will this mess with my Gingr or QuickBooks data?",
+    q: "Will this mess with my kennel software or QuickBooks data?",
     a: "No. You log into each tool through its own secure screen and we only ask to read. We can see your bookings, shifts, and ledgers — we can't change, delete, or move a single thing in them.",
   },
   {
@@ -22,7 +22,7 @@ const faqs = [
     a: "Absolutely. You and your admins see the whole group. Each manager only sees the branch you assign them. They get the numbers they're responsible for — and nothing else.",
   },
   {
-    q: "Do I have to switch off Gingr or my POS?",
+    q: "Do I have to switch off my kennel software or POS?",
     a: "Never. KennelEyes sits on top of what you already run. It reads your tools to build one clear picture — your booking and scheduling systems stay exactly where they are.",
   },
   {
@@ -37,7 +37,7 @@ export function FaqAccordion() {
   return (
     <section
       id="faq"
-      className="section-tint-cream relative scroll-mt-[var(--header-h)] py-[var(--section-py)]"
+      className="section-surface-alt relative scroll-mt-[var(--header-h)] py-[var(--section-py)]"
     >
       <PageContainer>
         <Reveal>

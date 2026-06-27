@@ -46,11 +46,11 @@ export const metadata: Metadata = {
   ),
   title: "KennelEyes — Every location on one screen",
   description:
-    "Revenue, labor, and profit for every kennel location — live. Connects Gingr, When I Work, and QuickBooks into one Mission Control dashboard.",
+    "Revenue, labor, and profit for every kennel location — live. Connects kennel, scheduling, and financial software into one Mission Control dashboard.",
   openGraph: {
     title: "KennelEyes — Every location on one screen",
     description:
-      "Revenue, labor, and profit for every kennel location — live. Connects Gingr, When I Work, and QuickBooks into one Mission Control dashboard.",
+      "Revenue, labor, and profit for every kennel location — live. Connects kennel, scheduling, and financial software into one Mission Control dashboard.",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "KennelEyes" }],
   },
   twitter: {

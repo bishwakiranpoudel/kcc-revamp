@@ -1,11 +1,65 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { INTEGRATION_LOGOS } from "@/lib/site";
+import { INTEGRATION_LOGOS, type SoftwareItem } from "@/lib/site";
+
+const ACCENT_CLASS: Record<SoftwareItem["accent"], string> = {
+  orange: "bg-trail-orange/12 text-trail-orange",
+  cyan: "bg-trail-cyan/12 text-trail-cyan",
+  green: "bg-trail-green/12 text-trail-green",
+};
 
 /**
- * Brand logo rendered as a consistent white "app icon" badge so the differing
- * source backgrounds (white / green / transparent) read uniformly on dark UI.
+ * Generic software category badge (kennel / scheduling / financial).
+ * Optional QuickBooks logo when `logoKey` is set (financial software only).
  */
+export function SoftwareBadge({
+  item,
+  size = 36,
+  className = "",
+  showLabel = false,
+}: {
+  item: SoftwareItem;
+  size?: number;
+  className?: string;
+  showLabel?: boolean;
+}) {
+  const logoSrc = item.id === "financial" ? INTEGRATION_LOGOS.QuickBooks : undefined;
+
+  return (
+    <span className={`inline-flex items-center gap-2.5 ${className}`.trim()}>
+      <span
+        className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl font-display text-sm font-extrabold ${ACCENT_CLASS[item.accent]}`}
+        style={{ width: size, height: size }}
+      >
+        {logoSrc ? (
+          <Image
+            src={logoSrc}
+            alt=""
+            width={size}
+            height={size}
+            className="h-[70%] w-[70%] object-contain"
+          />
+        ) : (
+          item.abbr
+        )}
+      </span>
+      {showLabel ? (
+        <span className="min-w-0 text-left">
+          <span className="font-display block text-sm font-bold text-trail-ink">
+            {item.label}
+          </span>
+          {"note" in item && item.note ? (
+            <span className="eyebrow block !text-[0.5rem] text-trail-faint">
+              {item.note}
+            </span>
+          ) : null}
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
+/** @deprecated Prefer SoftwareBadge for marketing surfaces. */
 export function BrandLogo({
   name,
   size = 36,
