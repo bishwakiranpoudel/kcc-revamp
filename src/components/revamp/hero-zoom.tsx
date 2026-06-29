@@ -2,15 +2,7 @@ import Link from "next/link";
 import { SOFTWARE_COPY } from "@/lib/site";
 import { PageContainer } from "@/components/revamp/section-ui";
 import { Reveal } from "@/components/revamp/reveal";
-
-const revenueBars = [42, 55, 48, 63, 58, 71, 67, 82, 76, 90, 84, 96];
-const sparkBars = [40, 52, 46, 60, 54, 66, 72];
-
-const dashboardRows = [
-  { label: "Boarding", value: "$21,480", trend: "+8.2%", up: true },
-  { label: "Daycare", value: "$14,260", trend: "+4.7%", up: true },
-  { label: "Grooming", value: "$8,940", trend: "−1.3%", up: false },
-];
+import { HeroPayrollChart } from "@/components/revamp/hero-payroll-chart";
 
 const stats = [
   {
@@ -113,90 +105,8 @@ export function HeroZoom() {
                   </div>
 
                   <div className="min-w-0 flex-1 p-5 sm:p-6">
-                    <div className="flex items-center justify-between">
-                      <span className="eyebrow !text-[0.5rem] text-trail-faint">
-                        Mission Control
-                      </span>
-                      <span className="eyebrow !text-[0.5rem] text-trail-faint">
-                        4 locations
-                      </span>
-                    </div>
-
-                    <div className="mt-3">
-                      <span className="eyebrow !text-[0.5rem] text-trail-faint">
-                        Revenue · this week
-                      </span>
-                      <div className="mt-1 flex items-end gap-2">
-                        <span className="font-display text-3xl font-extrabold tabular text-trail-ink sm:text-4xl">
-                          $48,920
-                        </span>
-                        <span className="mb-1 text-xs font-semibold text-trail-green">
-                          ▲ 6.4%
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 border-b border-[color:var(--border-hairline)] pb-4">
-                      <div className="flex h-24 items-end gap-1.5">
-                        {revenueBars.map((h, i) => (
-                          <div
-                            key={i}
-                            className="app-bar"
-                            style={{
-                              height: `${h}%`,
-                              opacity: 0.5 + (i / revenueBars.length) * 0.5,
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-4 space-y-2.5">
-                      {dashboardRows.map((row) => (
-                        <div
-                          key={row.label}
-                          className="flex items-center justify-between"
-                        >
-                          <span className="text-xs text-trail-muted">{row.label}</span>
-                          <div className="flex items-center gap-2.5">
-                            <span className="font-display text-sm font-bold tabular text-trail-ink">
-                              {row.value}
-                            </span>
-                            <span
-                              className={`w-12 text-right text-[0.6875rem] font-semibold tabular ${
-                                row.up ? "text-trail-green" : "text-trail-orange"
-                              }`}
-                            >
-                              {row.trend}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    <HeroPayrollChart />
                   </div>
-                </div>
-              </div>
-
-              <div className="absolute left-[-1.25rem] top-[40%] z-20 hidden w-[10.5rem] rounded-xl border border-[color:var(--border-hairline)] bg-white p-3 shadow-[var(--shadow-lg)] lg:block">
-                <span className="eyebrow !text-[0.5rem] text-trail-faint">
-                  Payroll vs revenue
-                </span>
-                <div className="mt-1.5 flex items-center justify-between">
-                  <span className="font-display text-lg font-extrabold tabular text-trail-ink">
-                    31.4%
-                  </span>
-                  <span className="text-[0.6875rem] font-semibold text-trail-green">
-                    −4.1%
-                  </span>
-                </div>
-                <div className="mt-1.5 flex h-6 items-end gap-0.5">
-                  {sparkBars.map((h, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 rounded-sm bg-trail-cyan/30"
-                      style={{ height: `${h}%` }}
-                    />
-                  ))}
                 </div>
               </div>
             </div>

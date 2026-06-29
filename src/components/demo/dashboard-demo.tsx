@@ -171,14 +171,6 @@ export function DashboardDemo() {
     <div className="kcc-light">
       <PinnedDemo title="app.kenneleyes.com/dashboard" toolbar={toolbar}>
         <div className="flex flex-col gap-6 p-4 sm:p-6">
-            <Card
-              title="Scheduled payroll vs scheduled revenue"
-              sub="Scheduled revenue (bars) and scheduled payroll hours (line) — next 10 days"
-              badge={<ScopeBadge>Outlook · 10d</ScopeBadge>}
-            >
-              <ForecastChart data={forecast} height={280} />
-            </Card>
-
             {/* KPI row */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
               {/* Capacity utilization */}
@@ -302,15 +294,23 @@ export function DashboardDemo() {
                 <RevenueAreaChart data={revenue} height={236} />
               </Card>
               <Card
+                title="Reservations & labor outlook"
+                sub="Next 10 days · bars = reservations, line = scheduled hours"
+                badge={<ScopeBadge>Outlook · 10d</ScopeBadge>}
+              >
+                <ForecastChart data={forecast} height={236} />
+              </Card>
+            </div>
+
+            {/* Operational row 2 */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
+              <Card
                 title="Daycare occupancy"
                 sub="Dogs in-house vs. capacity"
                 accent="#2563eb"
               >
                 <OccupancyBars data={occupancy} height={236} />
               </Card>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
               <Card title="Hours by position" sub="Where labor is spent">
                 <DonutChart data={positions} height={236} />
               </Card>
