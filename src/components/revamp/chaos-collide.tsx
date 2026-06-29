@@ -137,7 +137,7 @@ export function ChaosCollide() {
 
             <div className="solar-core">
               <Image
-                src="/logo/logo_eye.png"
+                src="/logo/logo_eye.png?v=2"
                 alt="KennelEyes"
                 width={56}
                 height={31}

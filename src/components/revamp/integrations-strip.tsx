@@ -77,7 +77,7 @@ export function IntegrationsStrip() {
             className="rounded-xl px-6 py-5 text-center"
           >
             <Image
-              src="/logo/logo_eye.png"
+              src="/logo/logo_eye.png?v=2"
               alt=""
               width={48}
               height={27}
@@ -148,7 +148,7 @@ export function IntegrationsStrip() {
               className="relative rounded-xl px-8 py-6 text-center"
             >
               <Image
-                src="/logo/logo_eye.png"
+                src="/logo/logo_eye.png?v=2"
                 alt=""
                 width={52}
                 height={29}

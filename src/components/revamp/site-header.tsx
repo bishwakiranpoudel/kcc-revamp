@@ -49,7 +49,7 @@ export function SiteHeader() {
     <>
       <Link href="/" aria-label="KennelEyes home" className="flex items-center gap-2">
         <Image
-          src="/logo/logo_eye.png"
+          src="/logo/logo_eye.png?v=2"
           alt=""
           width={48}
           height={27}

@@ -17,13 +17,22 @@ export function SiteFooter() {
       <PageContainer>
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
           <div className="max-w-xs">
-            <Image
-              src="/logo/logo_full.png"
-              alt="KennelEyes — Monitor · Analyze · Grow"
-              width={150}
-              height={118}
-              className="h-16 w-auto"
-            />
+            <Link
+              href="/"
+              aria-label="KennelEyes home"
+              className="flex items-center gap-2"
+            >
+              <Image
+                src="/logo/logo_eye.png?v=2"
+                alt=""
+                width={48}
+                height={27}
+                className="h-9 w-auto"
+              />
+              <span className="font-display text-xl font-extrabold tracking-tight text-trail-ink">
+                Kennel<span className="text-trail-cyan">Eyes</span>
+              </span>
+            </Link>
             <p className="mt-4 text-sm leading-relaxed text-trail-muted">
               Mission control for kennel operators.
             </p>
