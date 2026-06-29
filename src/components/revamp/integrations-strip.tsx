@@ -105,8 +105,8 @@ export function IntegrationsStrip() {
           >
             <defs>
               <linearGradient id="lineFade" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgba(14,116,144,0.95)" />
-                <stop offset="100%" stopColor="rgba(14,116,144,0.5)" />
+                <stop offset="0%" stopColor="rgba(63,195,179,0.95)" />
+                <stop offset="100%" stopColor="rgba(63,195,179,0.5)" />
               </linearGradient>
             </defs>
             {SOFTWARE_STACK.map((item) => (

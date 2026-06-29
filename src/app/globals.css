@@ -29,14 +29,14 @@
   --trail-orange: #ea580c;
   --trail-green: #15803d;
   --trail-cream: #b45309;
-  --trail-cyan: #0e7490;
+  --trail-cyan: #3fc3b3;
   --trail-purple: #7c3aed;
 
   /* ── Single brand accent (teal, aligned to the product signal blue) ──
      Marketing uses ONE accent. Orange / purple / green are reserved for
      semantic data (charts, trend up/down) only. */
-  --accent: #0e7490;
-  --accent-strong: #0b5d73;
+  --accent: #3fc3b3;
+  --accent-strong: #2f9e90;
   --accent-soft: color-mix(in oklab, var(--accent) 10%, white);
   --accent-tint: color-mix(in oklab, var(--accent) 6%, var(--trail-bg));
 
@@ -58,7 +58,7 @@
   --trail-portal-mid: #f4f6f9;
   --trail-portal-to: #ffffff;
   --trail-glow-orange: rgba(234, 88, 12, 0.2);
-  --trail-glow-cyan: rgba(14, 116, 144, 0.18);
+  --trail-glow-cyan: rgba(63, 195, 179, 0.22);
   --trail-glow-purple: rgba(124, 58, 237, 0.17);
   --trail-card-shadow: var(--shadow-md);
   --radius-card: 1rem;
@@ -93,7 +93,7 @@
   --data-daycare: #2563eb;
   --data-grooming: #d97706;
   --data-labor: #d97706;
-  --data-scheduled: #0e7490;
+  --data-scheduled: #3fc3b3;
   --data-danger: #e11d48;
 
   /* ── Legacy / demo chrome ── */
@@ -149,12 +149,12 @@
   --trail-orange: #f97316;
   --trail-green: #4ade80;
   --trail-cream: #e8dcc8;
-  --trail-cyan: #22d3ee;
+  --trail-cyan: #5ad4c5;
   --trail-purple: #c084fc;
   --trail-glass: rgba(255, 255, 255, 0.06);
   --trail-glass-border: rgba(255, 255, 255, 0.1);
   --trail-glow-orange: rgba(249, 115, 22, 0.12);
-  --trail-glow-cyan: rgba(34, 211, 238, 0.1);
+  --trail-glow-cyan: rgba(63, 195, 179, 0.12);
   --trail-glow-purple: rgba(192, 132, 252, 0.1);
   --trail-card-shadow:
     0 1px 2px rgba(31, 27, 22, 0.04),

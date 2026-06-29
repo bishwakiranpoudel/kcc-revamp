@@ -13,7 +13,7 @@ export const theme = {
     orange: "#f97316",
     green: "#4ade80",
     cream: "#f5e6c8",
-    cyan: "#22d3ee",
+    cyan: "#3fc3b3",
     purple: "#c084fc",
   },
   product: {
@@ -28,7 +28,7 @@ export const theme = {
     boarding: "#9333ea",
     daycare: "#2563eb",
     labor: "#d97706",
-    scheduled: "#0e7490",
+    scheduled: "#3fc3b3",
     danger: "#e11d48",
   },
 } as const;

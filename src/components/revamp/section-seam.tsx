@@ -57,7 +57,7 @@ export function SectionSeam({
           <polyline
             points={crest}
             fill="none"
-            stroke="#22d3ee"
+            stroke="#5ad4c5"
             strokeWidth="2.5"
             strokeLinejoin="round"
           />

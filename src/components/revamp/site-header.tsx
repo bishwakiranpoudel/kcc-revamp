@@ -96,7 +96,7 @@ export function SiteHeader() {
           href="/demo"
           className={`rounded-md px-5 py-2 text-sm font-bold transition-colors ${
             onDemo
-              ? "bg-signal-strong text-white hover:brightness-110"
+              ? "bg-trail-cyan text-white hover:bg-[color:var(--accent-strong)]"
               : "bg-trail-cyan text-white hover:bg-[color:var(--accent-strong)]"
           }`}
         >

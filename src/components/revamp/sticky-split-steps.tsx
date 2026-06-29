@@ -41,7 +41,7 @@ function StepVisual({ visual }: { visual: (typeof steps)[number]["visual"] }) {
       <div className="relative mx-auto size-52 sm:size-60">
         <div className="how-orbit-ring absolute inset-0 rounded-full border border-dashed border-trail-cyan/30" />
         <div className="how-orbit-ring absolute inset-[14%] rounded-full border border-dashed border-[color:var(--border-hairline-strong)]" />
-        <div className="absolute left-1/2 top-1/2 flex size-[34%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-trail-surface-strong shadow-[0_8px_30px_-8px_rgba(14,116,144,0.35)]">
+        <div className="absolute left-1/2 top-1/2 flex size-[34%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-trail-surface-strong shadow-[0_8px_30px_-8px_rgba(63,195,179,0.35)]">
           <Image
             src="/logo/logo_eye.png"
             alt="KennelEyes"
